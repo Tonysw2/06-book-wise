@@ -6,4 +6,8 @@
   .w-min-max {
     width: min(372px, 100%);
   }
+
+  .basis-max-content {
+    flex-basis: max-content;
+  }
 }

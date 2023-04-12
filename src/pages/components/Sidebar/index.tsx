@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import Logo from '../../../../public/logo.svg'
 import Link from 'next/link'
-import { HiMagnifyingGlass } from 'react-icons/hi2'
-import { BsGraphUpArrow } from 'react-icons/bs'
 import { MdLogin } from 'react-icons/md'
 import { useRouter } from 'next/router'
+import { Binoculars, ChartLineUp, SignIn } from '@phosphor-icons/react'
 
 export function Sidebar() {
   const router = useRouter()
@@ -18,28 +17,27 @@ export function Sidebar() {
           <ul className="flex flex-col items-start justify-center gap-4">
             <li>
               <Link
-                href={''}
+                href={'/guest/introduction'}
                 className={`flex items-center gap-3 before:content-[''] before:w-1 before:h-5 before:rounded-full ${
                   router.pathname === '/guest/introduction'
                     ? 'font-bold text-gray-100 before:bg-gradient-vertical'
                     : 'font-regular text-gray-400'
                 }`}
               >
-                <BsGraphUpArrow />
+                <ChartLineUp size={24} />
                 Início
               </Link>
             </li>
             <li>
-              {' '}
               <Link
-                href={''}
+                href={'/guest/explore'}
                 className={`flex items-center gap-3 before:content-[''] before:w-1 before:h-5 before:rounded-full ${
                   router.pathname === '/guest/explore'
                     ? 'font-bold text-gray-100 before:bg-gradient-vertical'
                     : 'font-regular text-gray-400'
                 }`}
               >
-                <HiMagnifyingGlass />
+                <Binoculars size={24} />
                 Explorar
               </Link>
             </li>
@@ -48,7 +46,7 @@ export function Sidebar() {
       </div>
 
       <button className="flex items-center justify-center gap-3 font-bold text-gray-200">
-        Faça login <MdLogin className="h-5 w-5 text-green-100" />
+        Faça login <SignIn size={20} weight="bold" className="text-green-100" />
       </button>
     </aside>
   )

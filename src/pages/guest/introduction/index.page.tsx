@@ -1,5 +1,6 @@
 import { AvatarUI } from '@/pages/components/Avatar'
 import { Sidebar } from '@/pages/components/Sidebar'
+import { ChartLineUp } from '@phosphor-icons/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsGraphUpArrow } from 'react-icons/bs'
@@ -11,9 +12,11 @@ export default function GuestIntroduction() {
       <Sidebar />
 
       <section className="h-full pt-20 pl-96">
-        <h1 className="mb-10 flex items-center gap-3 font-bold leading-short text-2xl">
-          <BsGraphUpArrow className="h-8 w-8 text-green-100" /> Início
-        </h1>
+        <header>
+          <h1 className="mb-10 flex items-center gap-3 font-bold leading-short text-2xl">
+            <ChartLineUp size={32} className="text-green-100" /> Início
+          </h1>
+        </header>
 
         <div className="flex gap-16">
           <div className="flex flex-col justify-start gap-4 basis-[608px] grow-0 shrink">
