@@ -10,4 +10,17 @@
   .basis-max-content {
     flex-basis: max-content;
   }
+
+  .list-scrollbar::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  .list-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .list-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #88888850;
+    border-radius: 999px;
+  }
 }

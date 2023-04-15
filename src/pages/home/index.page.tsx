@@ -1,9 +1,11 @@
 import Image from 'next/image'
-import HomeBg from '../../../public/bg-home.png'
 import Link from 'next/link'
-import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
 import { IoRocketOutline } from 'react-icons/io5'
+import HomeBg from '../../../public/bg-home.png'
+
+console.log(HomeBg)
 
 export default function Home() {
   return (

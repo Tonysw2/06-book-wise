@@ -1,162 +1,88 @@
 import { Sidebar } from '@/pages/components/Sidebar'
-import { Binoculars, MagnifyingGlass } from '@phosphor-icons/react'
-import Image from 'next/image'
+import 'keen-slider/keen-slider.min.css'
+import { useKeenSlider } from 'keen-slider/react'
+import { useState } from 'react'
+import { books } from '../../../../prisma/constants/books'
+import { categories } from '../../../../prisma/constants/categories'
+import { BookCard } from './components/BookCard'
+import { CategoryCard } from './components/CategoryCard'
+import { Header } from './components/Header'
+import { SliderArrow } from './components/SliderArrow'
 
 export default function Explore() {
+  const [activeCategory, setActiveCategory] = useState('Todos')
+
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const slidesPerView = 7
+  const [sliderRef, instanceRef] = useKeenSlider({
+    initial: 0,
+    slides: {
+      perView: slidesPerView,
+      spacing: 12,
+    },
+
+    drag: false,
+
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+
+    created() {
+      setLoaded(true)
+    },
+  })
+
+  function handleActiveCategory(event: any) {
+    setActiveCategory(event?.target!.textContent)
+  }
+
   return (
     <div className="h-[100vh] relative">
       <Sidebar />
 
       <section className="h-full pt-20 pl-96 pr-5">
-        <div className="max-w-5xl">
-          <header className="mb-10 flex items-center justify-between">
-            <h1 className="flex items-center gap-3 font-bold leading-short text-2xl">
-              <Binoculars size={32} className="text-green-100" />
-              Explorar
-            </h1>
+        <div className="max-w-5xl pb-5">
+          <Header />
 
-            <form className="group/search h-12 basis-[307px] grow-0 shrink flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200">
-              <input
-                type="text"
-                placeholder="Buscar livro ou autor"
-                className="basis-[239px] grow-0 shrink bg-[transparent] outline-none text-sm placeholder:text-gray-400"
-              />
-              <MagnifyingGlass
-                size={20}
-                className="text-gray-500 group-focus-within/search:text-green-200"
-              />
-            </form>
-          </header>
-
-          <ul className="mb-12 flex items-center gap-3">
-            <li
-              className={`py-1 px-4 rounded-full ${
-                true
-                  ? 'bg-purple-200 text-gray-100'
-                  : 'outline outline-1 outline-purple-100 text-purple-100'
-              }`}
+          <div className="relative">
+            <ul
+              ref={sliderRef}
+              className="keen-slider mb-12 flex items-center overflow-auto list-scrollbar"
             >
-              Tudo
-            </li>
-            <li
-              className={`py-1 px-4 rounded-full ${
-                false
-                  ? 'bg-purple-200 text-gray-100'
-                  : 'outline outline-1 outline-purple-100 text-purple-100'
-              }`}
-            >
-              Tudo
-            </li>
-            <li
-              className={`py-1 px-4 rounded-full ${
-                false
-                  ? 'bg-purple-200 text-gray-100'
-                  : 'outline outline-1 outline-purple-100 text-purple-100'
-              }`}
-            >
-              Tudo
-            </li>
-          </ul>
+              {categories.map(category => {
+                return (
+                  <CategoryCard
+                    key={category.id}
+                    name={category.name}
+                    activeCategory={activeCategory}
+                    handleActiveCategory={handleActiveCategory}
+                  />
+                )
+              })}
+            </ul>
+            {loaded && instanceRef.current && (
+              <>
+                <SliderArrow
+                  type="left"
+                  currentSlide={currentSlide}
+                  slidesPerView={slidesPerView}
+                  instanceRef={instanceRef}
+                />
+                <SliderArrow
+                  type="right"
+                  currentSlide={currentSlide}
+                  slidesPerView={slidesPerView}
+                  instanceRef={instanceRef}
+                />
+              </>
+            )}
+          </div>
 
           <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
-            <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
-              <Image
-                src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-                alt=""
-                width={108}
-                height={152}
-                className="rounded-sm"
-              />
-
-              <div>
-                <h3 className="font-bold leading-short">O Hobbit</h3>
-                <p className="text-sm text-gray-400">J.R.R Tolkien</p>
-              </div>
-            </li>
+            {books.map(book => {
+              return <BookCard key={book.id} book={book} />
+            })}
           </ul>
         </div>
       </section>

@@ -21,6 +21,12 @@ module.exports = {
           'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
 
         'gradient-horizontal': `linear-gradient(90deg, #7FD1CC 0%, #9694F5 100%)`,
+
+        'gradient-arrow-left':
+          'linear-gradient(to left, transparent 0%, #0E1116 70%)',
+
+        'gradient-arrow-right':
+          'linear-gradient(to right, transparent 0%, #0E1116 70%)',
       },
     },
 
@@ -29,6 +35,8 @@ module.exports = {
     },
 
     colors: {
+      transparent: 'transparent',
+
       white: '#FFFFFF',
       black: '#000000',
 
