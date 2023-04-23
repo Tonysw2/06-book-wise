@@ -12,6 +12,9 @@ module.exports = {
         sm: { max: '640px' },
         md: { max: '768px' },
         lg: { max: '1024px' },
+        xl: { max: '1280px' },
+        '2xl': { max: '1440px' },
+        '3xl': { max: '1600px' },
       },
 
       backgroundImage: {
@@ -61,15 +64,6 @@ module.exports = {
         700: '#181C2A',
         800: '#0E1116',
       },
-    },
-
-    fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      md: '1rem',
-      lg: '1.125rem',
-      xl: '1.25rem',
-      '2xl': '1.5rem',
     },
 
     fontWeight: {
