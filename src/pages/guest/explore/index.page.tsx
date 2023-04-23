@@ -1,87 +1,60 @@
 import { Sidebar } from '@/pages/components/Sidebar'
 import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { books } from '../../../../prisma/constants/books'
-import { categories } from '../../../../prisma/constants/categories'
 import { BookCard } from './components/BookCard'
-import { CategoryCard } from './components/CategoryCard'
 import { Header } from './components/Header'
-import { SliderArrow } from './components/SliderArrow'
+import { CategoryList } from './components/CategoryList'
+
+type BookListType = typeof books
 
 export default function Explore() {
-  const [activeCategory, setActiveCategory] = useState('Todos')
+  const [bookList, setBookList] = useState<BookListType>([])
 
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-  const slidesPerView = 7
-  const [sliderRef, instanceRef] = useKeenSlider({
-    initial: 0,
-    slides: {
-      perView: slidesPerView,
-      spacing: 12,
-    },
+  function filterByCategory(selectedCategory: string) {
+    if (selectedCategory === 'Todos') {
+      setBookList(books)
+      return
+    }
 
-    drag: false,
+    const updatedBookList = books.filter((book) =>
+      book.categories.some((category) => category.name === selectedCategory)
+    )
 
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel)
-    },
-
-    created() {
-      setLoaded(true)
-    },
-  })
-
-  function handleActiveCategory(event: any) {
-    setActiveCategory(event?.target!.textContent)
+    setBookList(updatedBookList)
   }
 
+  function filterByQuery(query: string) {
+    const updatedBookList = books.filter(
+      (book) =>
+        book.author.toLowerCase().includes(query) ||
+        book.name.toLowerCase().includes(query)
+    )
+
+    setBookList(updatedBookList)
+  }
+
+  useEffect(() => {
+    setBookList(books)
+  }, [])
+
   return (
-    <div className="h-[100vh] relative">
+    <div className="relative h-screen max-w-[1440px] mx-auto flex">
       <Sidebar />
 
-      <section className="h-full pt-20 pl-96 pr-5">
-        <div className="max-w-5xl pb-5">
-          <Header />
+      <section className="mt-16 mr-16 ml-80">
+        <div className="max-w-5xl pb-5 flex flex-col">
+          <Header filterByQuery={filterByQuery} />
 
-          <div className="relative">
-            <ul
-              ref={sliderRef}
-              className="keen-slider mb-12 flex items-center overflow-auto list-scrollbar"
-            >
-              {categories.map(category => {
-                return (
-                  <CategoryCard
-                    key={category.id}
-                    name={category.name}
-                    activeCategory={activeCategory}
-                    handleActiveCategory={handleActiveCategory}
-                  />
-                )
-              })}
-            </ul>
-            {loaded && instanceRef.current && (
-              <>
-                <SliderArrow
-                  type="left"
-                  currentSlide={currentSlide}
-                  slidesPerView={slidesPerView}
-                  instanceRef={instanceRef}
-                />
-                <SliderArrow
-                  type="right"
-                  currentSlide={currentSlide}
-                  slidesPerView={slidesPerView}
-                  instanceRef={instanceRef}
-                />
-              </>
-            )}
-          </div>
+          <CategoryList filterByCategory={filterByCategory} />
 
           <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
-            {books.map(book => {
-              return <BookCard key={book.id} book={book} />
+            {bookList.map((book) => {
+              return (
+                <li key={book.id} className="max-w-[324px] flex-grow">
+                  <BookCard book={book} />
+                </li>
+              )
             })}
           </ul>
         </div>

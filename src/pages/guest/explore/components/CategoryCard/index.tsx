@@ -1,13 +1,14 @@
-interface CategoryCardProps {
+import { ComponentProps, useState } from 'react'
+
+interface CategoryCardProps extends ComponentProps<'li'> {
   name: string
   activeCategory: string
-  handleActiveCategory: (event: any) => void
 }
 
 export function CategoryCard({
   name,
   activeCategory,
-  handleActiveCategory,
+  ...rest
 }: CategoryCardProps) {
   return (
     <li
@@ -16,7 +17,7 @@ export function CategoryCard({
           ? 'bg-purple-200 text-gray-100 border border-purple-200'
           : 'border border-purple-100 text-purple-100'
       }`}
-      onClick={handleActiveCategory}
+      {...rest}
     >
       {name}
     </li>

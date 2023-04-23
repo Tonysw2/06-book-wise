@@ -1,15 +1,16 @@
 import Image from 'next/image'
 import Logo from '../../../../public/logo.svg'
 import Link from 'next/link'
-import { MdLogin } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import { Binoculars, ChartLineUp, SignIn } from '@phosphor-icons/react'
+import * as Dialog from '@radix-ui/react-dialog'
+import { LoginModal } from '../LoginModal'
 
 export function Sidebar() {
   const router = useRouter()
 
   return (
-    <aside className=" flex flex-col align-center justify-between bg-sidebar bg-cover bg-no-repeat py-10 px-12 rounded-xl fixed top-5 left-5 bottom-5">
+    <aside className="fixed top-5 bottom-5 ml-5 flex flex-col align-center justify-between bg-sidebar bg-cover bg-no-repeat py-10 px-12 rounded-xl">
       <div>
         <Image src={Logo} alt="" className="mb-16" />
 
@@ -45,9 +46,15 @@ export function Sidebar() {
         </nav>
       </div>
 
-      <button className="flex items-center justify-center gap-3 font-bold text-gray-200">
-        Faça login <SignIn size={20} weight="bold" className="text-green-100" />
-      </button>
+      <Dialog.Root>
+        <Dialog.Trigger asChild>
+          <button className="flex items-center justify-center gap-3 font-bold text-gray-200">
+            Faça login
+            <SignIn size={20} weight="bold" className="text-green-100" />
+          </button>
+        </Dialog.Trigger>
+        <LoginModal />
+      </Dialog.Root>
     </aside>
   )
 }

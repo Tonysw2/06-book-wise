@@ -21,7 +21,7 @@ export function SliderArrow({
 }: ArrowProps) {
   return (
     <button
-      className={`h-[110%] w-7 absolute top-1/2 ${
+      className={`h-[110%] w-9 absolute top-1/2 ${
         type === 'left' ? 'left-0' : 'right-0'
       } -translate-y-1/2 flex items-center justify-center ${
         type === 'left' ? 'bg-gradient-arrow-left' : 'bg-gradient-arrow-right'

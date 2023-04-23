@@ -11,7 +11,7 @@ interface BookCardProps {
 
 export function BookCard({ book }: BookCardProps) {
   return (
-    <li className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
+    <article className="py-4 px-5 flex items-start gap-5 bg-gray-700 rounded-md">
       <Image
         src={book.cover_url}
         alt=""
@@ -21,9 +21,11 @@ export function BookCard({ book }: BookCardProps) {
       />
 
       <div>
-        <h3 className="font-bold leading-short">{book.name}</h3>
+        <h3 className="font-bold leading-short line-clamp-3" title={book.name}>
+          {book.name}
+        </h3>
         <p className="text-sm text-gray-400">{book.author}</p>
       </div>
-    </li>
+    </article>
   )
 }
