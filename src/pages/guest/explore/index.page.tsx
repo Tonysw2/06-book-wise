@@ -1,42 +1,49 @@
 import { Sidebar } from '@/pages/components/Sidebar'
 import 'keen-slider/keen-slider.min.css'
-import { useEffect, useState } from 'react'
-import { books } from '../../../../prisma/constants/books'
+import { useState } from 'react'
 import { BookCard } from './components/BookCard'
 import { Header } from './components/Header'
 import { CategoryList } from './components/CategoryList'
+import { GetStaticProps } from 'next'
+import { prisma } from '@/lib/prisma'
+import dayjs from 'dayjs'
+import { api } from '@/lib/axios'
 
-type BookListType = typeof books
+type Book = {
+  id: string
+  name: string
+  author: string
+  categories: { name: string; id: string }[]
+  cover_url: string
+}
 
-export default function Explore() {
-  const [bookList, setBookList] = useState<BookListType>([])
+type Category = {
+  id: string
+  name: string
+}
 
-  function filterByCategory(selectedCategory: string) {
-    if (selectedCategory === 'Todos') {
+interface ExploreProps {
+  books: Book[]
+  categories: Category[]
+}
+
+export default function Explore({ books, categories }: ExploreProps) {
+  const [bookList, setBookList] = useState(books)
+
+  async function filterByCategory(selectedCategoryId: string) {
+    if (selectedCategoryId === '1') {
       setBookList(books)
       return
     }
 
-    const updatedBookList = books.filter((book) =>
-      book.categories.some((category) => category.name === selectedCategory)
+    const res = await api.get(
+      `/categories-on-books?categoryId=${selectedCategoryId}`
     )
-
-    setBookList(updatedBookList)
+    const filteredBooks = res.data
+    setBookList(filteredBooks)
   }
 
-  function filterByQuery(query: string) {
-    const updatedBookList = books.filter(
-      (book) =>
-        book.author.toLowerCase().includes(query) ||
-        book.name.toLowerCase().includes(query)
-    )
-
-    setBookList(updatedBookList)
-  }
-
-  useEffect(() => {
-    setBookList(books)
-  }, [])
+  function filterByQuery() {}
 
   return (
     <div className="relative h-screen max-w-[1440px] mx-auto flex">
@@ -46,7 +53,10 @@ export default function Explore() {
         <div className="max-w-5xl pb-5 flex flex-col">
           <Header filterByQuery={filterByQuery} />
 
-          <CategoryList filterByCategory={filterByCategory} />
+          <CategoryList
+            categories={categories}
+            filterByCategory={filterByCategory}
+          />
 
           <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
             {bookList.map((book) => {
@@ -61,4 +71,24 @@ export default function Explore() {
       </section>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const books = await prisma.book.findMany()
+  const categories = await prisma.category.findMany()
+
+  const formattedBooks = books.map((book) => {
+    return {
+      ...book,
+      created_at: dayjs(book.created_at).format('DD/MM/YYYY'),
+    }
+  })
+
+  return {
+    props: {
+      books: formattedBooks,
+      categories,
+    },
+    revalidate: 60 * 60 * 24, // 1 dia
+  }
 }

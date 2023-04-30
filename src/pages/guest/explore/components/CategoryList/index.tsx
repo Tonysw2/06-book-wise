@@ -1,17 +1,27 @@
 import { MouseEvent, useEffect, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { CategoryCard } from '../CategoryCard'
-import { categories } from '../../../../../../prisma/constants/categories'
 import { SliderArrow } from '../SliderArrow'
+import { GetStaticProps } from 'next'
+import { categories } from '../../../../../../prisma/constants/categories'
+import { prisma } from '@/lib/prisma'
+
+type Category = {
+  id: string
+  name: string
+}
 
 interface CategoryListProps {
+  categories: Category[]
   filterByCategory: (selectedCategory: string) => void
 }
 
-export function CategoryList({ filterByCategory }: CategoryListProps) {
+export function CategoryList({
+  categories,
+  filterByCategory,
+}: CategoryListProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [loaded, setLoaded] = useState(false)
-
   const slidesPerView = 7
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
@@ -33,9 +43,12 @@ export function CategoryList({ filterByCategory }: CategoryListProps) {
 
   const [activeCategory, setActiveCategory] = useState('Todos')
 
-  function handleActiveCategory(event: MouseEvent<HTMLLIElement>) {
+  async function handleActiveCategory(
+    event: MouseEvent<HTMLLIElement>,
+    categoryId: string
+  ) {
     setActiveCategory(event.currentTarget.textContent!)
-    filterByCategory(event.currentTarget.textContent!)
+    filterByCategory(categoryId)
   }
 
   return (
@@ -47,7 +60,7 @@ export function CategoryList({ filterByCategory }: CategoryListProps) {
               key={category.id}
               name={category.name}
               activeCategory={activeCategory}
-              onClick={handleActiveCategory}
+              onClick={(event) => handleActiveCategory(event, category.id)}
             />
           )
         })}

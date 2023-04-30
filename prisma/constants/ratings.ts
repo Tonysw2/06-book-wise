@@ -1,6 +1,8 @@
+import { randomUUID } from 'crypto'
+
 export const ratings = [
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
@@ -8,14 +10,14 @@ export const ratings = [
     user_id: '48e458c0-8b1e-4994-b85a-1e1cfcc9dd60',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description: 'Nec tempor nunc in egestas.',
     book_id: '86596503-369b-4614-bacf-11c9bb73e779',
     user_id: 'c296c6c0-5c59-40dd-aa8a-ef2b015b7502',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 5,
     description:
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
@@ -23,7 +25,7 @@ export const ratings = [
     user_id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
@@ -31,14 +33,14 @@ export const ratings = [
     user_id: '48e458c0-8b1e-4994-b85a-1e1cfcc9dd60',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description: 'Nec tempor nunc in egestas.',
     book_id: 'd0d70b05-d48f-4d83-b1e8-0b4dd984c97d',
     user_id: 'c296c6c0-5c59-40dd-aa8a-ef2b015b7502',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 5,
     description:
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
@@ -46,7 +48,7 @@ export const ratings = [
     user_id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
@@ -54,14 +56,14 @@ export const ratings = [
     user_id: '48e458c0-8b1e-4994-b85a-1e1cfcc9dd60',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description: 'Nec tempor nunc in egestas.',
     book_id: '0440ad7d-230e-4573-b455-84ca38b5d339',
     user_id: 'c296c6c0-5c59-40dd-aa8a-ef2b015b7502',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 5,
     description:
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
@@ -69,7 +71,7 @@ export const ratings = [
     user_id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
@@ -77,14 +79,14 @@ export const ratings = [
     user_id: '48e458c0-8b1e-4994-b85a-1e1cfcc9dd60',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description: 'Nec tempor nunc in egestas.',
     book_id: '4fd2b389-b211-40b5-9797-f78cbb985645',
     user_id: 'c296c6c0-5c59-40dd-aa8a-ef2b015b7502',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 5,
     description:
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
@@ -92,7 +94,7 @@ export const ratings = [
     user_id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
@@ -100,14 +102,14 @@ export const ratings = [
     user_id: '48e458c0-8b1e-4994-b85a-1e1cfcc9dd60',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description: 'Nec tempor nunc in egestas.',
     book_id: '1d5cdbdc-b90f-40d5-8fe9-d4923ae12dbd',
     user_id: 'c296c6c0-5c59-40dd-aa8a-ef2b015b7502',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 5,
     description:
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
@@ -115,7 +117,7 @@ export const ratings = [
     user_id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
   },
   {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     rate: 4,
     description:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',

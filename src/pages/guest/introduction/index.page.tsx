@@ -37,7 +37,7 @@ export default function GuestIntroduction() {
               <h2 className="text-sm">Livros populares</h2>
 
               <Link
-                href=""
+                href="/guest/explore"
                 className="flex items-center gap-2 font-bold text-sm text-purple-100"
               >
                 Ver todos <CaretRight size={16} />

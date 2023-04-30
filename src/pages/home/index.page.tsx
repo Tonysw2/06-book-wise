@@ -5,8 +5,6 @@ import { FcGoogle } from 'react-icons/fc'
 import { IoRocketOutline } from 'react-icons/io5'
 import HomeBg from '../../../public/bg-home.png'
 
-console.log(HomeBg)
-
 export default function Home() {
   return (
     <div className="h-[100vh] max-w-[1440px] mx-auto grid grid-cols-[auto_1fr] place-items-center px-5 py-3 lg:grid-cols-1 lg:p-0">
