@@ -26,15 +26,15 @@ export function Header({ filterByQuery, error }: HeaderProps) {
         Explorar
       </h1>
 
-      <div>
+      <div className="max-w-md w-full">
         <form
           onSubmit={handleSubmit}
-          className="group/search h-12 basis-[307px] grow-0 shrink flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200"
+          className="h-12 flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200"
         >
           <input
             type="text"
             placeholder="Buscar livro ou autor"
-            className="basis-[239px] grow-0 shrink bg-[transparent] outline-none text-sm placeholder:text-gray-400"
+            className="w-full bg-[transparent] outline-none text-sm placeholder:text-gray-400"
             value={query}
             onChange={handleQuery}
           />
