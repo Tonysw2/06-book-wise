@@ -2,8 +2,6 @@ import { MouseEvent, useEffect, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { CategoryCard } from '../CategoryCard'
 import { SliderArrow } from '../SliderArrow'
-import { GetStaticProps } from 'next'
-import { categories } from '../../../../../../prisma/constants/categories'
 import { prisma } from '@/lib/prisma'
 
 type Category = {
