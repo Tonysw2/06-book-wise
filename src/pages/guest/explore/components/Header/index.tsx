@@ -26,10 +26,14 @@ export function Header({ filterByQuery, error }: HeaderProps) {
         Explorar
       </h1>
 
-      <div className="max-w-md w-full">
+      <div className="relative max-w-md w-full">
         <form
           onSubmit={handleSubmit}
-          className="h-12 flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200"
+          className={`h-12 flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md ${
+            error
+              ? 'focus-within:border-red-800'
+              : 'focus-within:border-green-200'
+          }`}
         >
           <input
             type="text"
@@ -47,7 +51,9 @@ export function Header({ filterByQuery, error }: HeaderProps) {
         </form>
 
         {error ? (
-          <p className="mt-2 font-bold text-xs text-red-800">{error}</p>
+          <p className="absolute mt-2 font-bold text-xs text-red-800">
+            {error}
+          </p>
         ) : null}
       </div>
     </header>
