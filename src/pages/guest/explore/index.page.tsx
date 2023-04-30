@@ -6,7 +6,6 @@ import { Header } from './components/Header'
 import { CategoryList } from './components/CategoryList'
 import { GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
-import dayjs from 'dayjs'
 import { api } from '@/lib/axios'
 
 type Book = {
@@ -29,21 +28,29 @@ interface ExploreProps {
 
 export default function Explore({ books, categories }: ExploreProps) {
   const [bookList, setBookList] = useState(books)
+  const [error, setError] = useState(null)
 
   async function filterByCategory(selectedCategoryId: string) {
-    if (selectedCategoryId === '1') {
-      setBookList(books)
-      return
+    try {
+      const res = await api.get(`/books?categoryId=${selectedCategoryId}`)
+      const filteredBooksByCategory = res.data
+      setBookList(filteredBooksByCategory)
+      setError(null)
+    } catch (error: any) {
+      setError(error.response.data.message)
     }
-
-    const res = await api.get(
-      `/categories-on-books?categoryId=${selectedCategoryId}`
-    )
-    const filteredBooks = res.data
-    setBookList(filteredBooks)
   }
 
-  function filterByQuery() {}
+  async function filterByQuery(query: string) {
+    try {
+      const res = await api.get(`/books/search?query=${query}`)
+      const filteredBooksByQuery = res.data
+      setBookList(filteredBooksByQuery)
+      setError(null)
+    } catch (error: any) {
+      setError(error.response.data.message)
+    }
+  }
 
   return (
     <div className="relative h-screen max-w-[1440px] mx-auto flex">
@@ -51,7 +58,7 @@ export default function Explore({ books, categories }: ExploreProps) {
 
       <section className="mt-16 mr-16 ml-80">
         <div className="max-w-5xl pb-5 flex flex-col">
-          <Header filterByQuery={filterByQuery} />
+          <Header filterByQuery={filterByQuery} error={error} />
 
           <CategoryList
             categories={categories}
@@ -74,19 +81,22 @@ export default function Explore({ books, categories }: ExploreProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const books = await prisma.book.findMany()
-  const categories = await prisma.category.findMany()
-
-  const formattedBooks = books.map((book) => {
-    return {
-      ...book,
-      created_at: dayjs(book.created_at).format('DD/MM/YYYY'),
-    }
-  })
+  const [books, categories] = await Promise.all([
+    prisma.book.findMany({
+      select: {
+        id: true,
+        name: true,
+        author: true,
+        categories: true,
+        cover_url: true,
+      },
+    }),
+    prisma.category.findMany(),
+  ])
 
   return {
     props: {
-      books: formattedBooks,
+      books,
       categories,
     },
     revalidate: 60 * 60 * 24, // 1 dia

@@ -41,7 +41,7 @@ export function CategoryList({
 
   const [activeCategory, setActiveCategory] = useState('Todos')
 
-  async function handleActiveCategory(
+  function handleActiveCategory(
     event: MouseEvent<HTMLLIElement>,
     categoryId: string
   ) {

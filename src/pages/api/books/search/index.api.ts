@@ -10,21 +10,20 @@ export default async function handler(
     return res.status(404).json({ error: 'Mehthod not allowed' })
   }
 
-  const { categoryId } = req.query
+  const { query } = req.query
 
-  const categoriesOnBooks = await prisma.categoriesOnBooks.findMany({
+  const filteredBooksByQuery = await prisma.book.findMany({
     where: {
-      categoryId: String(categoryId),
+      OR: [{ author: { contains: String(query) } }],
     },
   })
+  console.log(filteredBooksByQuery)
 
-  const filteredByCategoryBooks = await prisma.book.findMany({
-    where: {
-      id: {
-        in: categoriesOnBooks.map((category) => category.book_id),
-      },
-    },
-  })
+  if (filteredBooksByQuery.length < 1) {
+    return res
+      .status(404)
+      .json({ message: 'No books found with this name or author.' })
+  }
 
-  res.status(200).json(filteredByCategoryBooks)
+  res.status(200).json(filteredBooksByQuery)
 }

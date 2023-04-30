@@ -64,6 +64,10 @@ module.exports = {
         700: '#181C2A',
         800: '#0E1116',
       },
+
+      red: {
+        800: '#b91c1c',
+      },
     },
 
     fontWeight: {

@@ -1,17 +1,22 @@
 import { Binoculars, MagnifyingGlass } from '@phosphor-icons/react'
-import { FormEvent, useRef } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 interface HeaderProps {
   filterByQuery: (query: string) => void
+  error: string | null
 }
 
-export function Header({ filterByQuery }: HeaderProps) {
-  const queryRef = useRef<HTMLInputElement>(null)
+export function Header({ filterByQuery, error }: HeaderProps) {
+  const [query, setQuery] = useState('')
+
+  function handleQuery(event: ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value)
+  }
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    filterByQuery(queryRef.current!.value)
-    queryRef.current!.value = ''
+    filterByQuery(query)
+    setQuery('')
   }
 
   return (
@@ -21,23 +26,30 @@ export function Header({ filterByQuery }: HeaderProps) {
         Explorar
       </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="group/search h-12 basis-[307px] grow-0 shrink flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200"
-      >
-        <input
-          ref={queryRef}
-          type="text"
-          placeholder="Buscar livro ou autor"
-          className="basis-[239px] grow-0 shrink bg-[transparent] outline-none text-sm placeholder:text-gray-400"
-        />
-        <button type="submit">
-          <MagnifyingGlass
-            size={20}
-            className="text-gray-500 group-focus-within/search:text-green-200"
+      <div>
+        <form
+          onSubmit={handleSubmit}
+          className="group/search h-12 basis-[307px] grow-0 shrink flex items-center justify-between border border-gray-500 py-[14px] px-5 rounded-md focus-within:border-green-200"
+        >
+          <input
+            type="text"
+            placeholder="Buscar livro ou autor"
+            className="basis-[239px] grow-0 shrink bg-[transparent] outline-none text-sm placeholder:text-gray-400"
+            value={query}
+            onChange={handleQuery}
           />
-        </button>
-      </form>
+          <button type="submit">
+            <MagnifyingGlass
+              size={20}
+              className="text-gray-500 group-focus-within/search:text-green-200"
+            />
+          </button>
+        </form>
+
+        {error ? (
+          <p className="mt-2 font-bold text-xs text-red-800">{error}</p>
+        ) : null}
+      </div>
     </header>
   )
 }
