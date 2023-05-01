@@ -1,11 +1,14 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { IoRocketOutline } from 'react-icons/io5'
 import HomeBg from '../../../public/bg-home.png'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+
   return (
     <div className="h-[100vh] max-w-[1440px] mx-auto grid grid-cols-[auto_1fr] place-items-center px-5 py-3 lg:grid-cols-1 lg:p-0">
       <Image
@@ -27,29 +30,28 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4">
-            <Link
-              href={''}
+            <button
               className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold leading-base sm:p-3"
+              onClick={() => {
+                signIn('google')
+              }}
             >
               <FcGoogle className="h-8 w-8 mr-5" />
               Google
-            </Link>
+            </button>
 
-            <Link
-              href={''}
-              className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold leading-base sm:p-3"
-            >
+            <button className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold leading-base sm:p-3">
               <FaGithub className="h-8 w-8 mr-5" />
               GitHub
-            </Link>
+            </button>
 
-            <Link
-              href={'/guest/introduction'}
+            <button
+              onClick={() => router.push('/introduction')}
               className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold leading-base sm:p-3"
             >
               <IoRocketOutline className="h-8 w-8 mr-5 text-purple-100" />
               Acesse como visitante
-            </Link>
+            </button>
           </div>
         </div>
       </section>

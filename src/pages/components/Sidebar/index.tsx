@@ -3,8 +3,6 @@ import Logo from '../../../../public/logo.svg'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Binoculars, ChartLineUp, SignIn } from '@phosphor-icons/react'
-import * as Dialog from '@radix-ui/react-dialog'
-import { LoginModal } from '../LoginModal'
 
 export function Sidebar() {
   const router = useRouter()
@@ -46,15 +44,13 @@ export function Sidebar() {
         </nav>
       </div>
 
-      <Dialog.Root>
-        <Dialog.Trigger asChild>
-          <button className="flex items-center justify-center gap-3 font-bold text-gray-200">
-            Faça login
-            <SignIn size={20} weight="bold" className="text-green-100" />
-          </button>
-        </Dialog.Trigger>
-        <LoginModal />
-      </Dialog.Root>
+      <Link
+        href={'/'}
+        className="flex items-center justify-center gap-3 font-bold text-gray-200"
+      >
+        Faça login
+        <SignIn size={20} weight="bold" className="text-green-100" />
+      </Link>
     </aside>
   )
 }

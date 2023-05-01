@@ -1,9 +1,9 @@
 import { CaretRight, ChartLineUp } from '@phosphor-icons/react'
-import { Sidebar } from '../../components/Sidebar'
+import { Sidebar } from '../components/Sidebar'
 import { ReviewCard } from './components/ReviewCard'
 import Link from 'next/link'
 import { BookCard } from './components/BookCard'
-import { books } from '../../../../prisma/constants/books'
+import { books } from '../../../prisma/constants/books'
 
 export default function GuestIntroduction() {
   return (
@@ -37,7 +37,7 @@ export default function GuestIntroduction() {
               <h2 className="text-sm">Livros populares</h2>
 
               <Link
-                href="/guest/explore"
+                href="/explore"
                 className="flex items-center gap-2 font-bold text-sm text-purple-100"
               >
                 Ver todos <CaretRight size={16} />
