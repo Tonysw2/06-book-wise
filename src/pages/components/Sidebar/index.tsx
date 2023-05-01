@@ -60,7 +60,7 @@ export function Sidebar() {
                 <Link
                   href={'/profile'}
                   className={`flex items-center gap-3 before:content-[''] before:w-1 before:h-5 before:rounded-full hover:text-gray-100 ${
-                    router.pathname === '/explore'
+                    router.pathname === '/ptofile'
                       ? 'font-bold text-gray-100 before:bg-gradient-vertical'
                       : 'font-regular text-gray-400'
                   }`}
