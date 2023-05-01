@@ -3,11 +3,17 @@ import { AiOutlineUser } from 'react-icons/ai'
 
 interface AvatarProps {
   url?: string
+  height?: number
+  width?: number
 }
 
-export function AvatarUI({ url }: AvatarProps) {
+export function AvatarUI({ url, height = 40, width = 40 }: AvatarProps) {
   return (
-    <Avatar.Root className="h-10 w-10 overflow-hidden flex items-center justify-center bg-gradient-vertical rounded-full">
+    <Avatar.Root
+      className={`h-${height / 4} w-${
+        width / 4
+      } overflow-hidden flex items-center justify-center bg-gradient-vertical rounded-full`}
+    >
       <Avatar.Image src={url} alt="" />
 
       <Avatar.Fallback className="h-full w-full flex items-center justify-center bg-gray-800">

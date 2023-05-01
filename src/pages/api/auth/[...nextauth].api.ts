@@ -12,7 +12,11 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    redirect({ baseUrl }) {
+    redirect({ url, baseUrl }) {
+      if (url.length > baseUrl.length) {
+        return baseUrl
+      }
+
       return `${baseUrl}/introduction`
     },
   },
