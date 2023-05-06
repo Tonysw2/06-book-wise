@@ -1,4 +1,6 @@
+import { PageTitle } from '@/pages/components/PageTitle'
 import { Binoculars, MagnifyingGlass } from '@phosphor-icons/react'
+import { useRouter } from 'next/router'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 interface HeaderProps {
@@ -8,6 +10,7 @@ interface HeaderProps {
 
 export function Header({ filterByQuery, error }: HeaderProps) {
   const [query, setQuery] = useState('')
+  const route = useRouter()
 
   function handleQuery(event: ChangeEvent<HTMLInputElement>) {
     setQuery(event.target.value)
@@ -21,10 +24,7 @@ export function Header({ filterByQuery, error }: HeaderProps) {
 
   return (
     <header className="mb-10 flex items-center justify-between">
-      <h1 className="flex items-center gap-3 font-bold leading-short text-2xl">
-        <Binoculars size={32} className="text-green-100" />
-        Explorar
-      </h1>
+      <PageTitle title={route.pathname} />
 
       <div className="relative max-w-md w-full">
         <form

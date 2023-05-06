@@ -4,16 +4,18 @@ import { ReviewCard } from './components/ReviewCard'
 import Link from 'next/link'
 import { BookCard } from './components/BookCard'
 import { books } from '../../../prisma/constants/books'
+import { PageTitle } from '../components/PageTitle'
+import { useRouter } from 'next/router'
 
 export default function GuestIntroduction() {
+  const route = useRouter()
+
   return (
     <div className="relative h-screen max-w-[1440px] mx-auto flex">
       <Sidebar />
 
       <section className="mt-16 ml-80 flex flex-col gap-10">
-        <h1 className="flex items-center gap-3 font-bold text-2xl leading-short">
-          <ChartLineUp size={32} className="text-green-100" /> Início
-        </h1>
+        <PageTitle title={route.pathname} />
 
         <div className="flex gap-16">
           <div className="flex flex-col gap-4">
