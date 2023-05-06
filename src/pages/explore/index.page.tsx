@@ -8,6 +8,8 @@ import { GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
 import { api } from '@/lib/axios'
 import { v4 as uuid } from 'uuid'
+import * as Dialog from '@radix-ui/react-dialog'
+import { DialogContent } from './components/DialogContent'
 
 type Book = {
   id: string
@@ -30,6 +32,7 @@ interface ExploreProps {
 export default function Explore({ books, categories }: ExploreProps) {
   const [bookList, setBookList] = useState(books)
   const [error, setError] = useState(null)
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
 
   async function filterByCategory(selectedCategoryId: string) {
     try {
@@ -53,6 +56,10 @@ export default function Explore({ books, categories }: ExploreProps) {
     }
   }
 
+  function handleSelectedBookId(id: string) {
+    setSelectedBookId(id)
+  }
+
   return (
     <div className="relative h-screen max-w-[1440px] mx-auto flex">
       <Sidebar />
@@ -66,15 +73,22 @@ export default function Explore({ books, categories }: ExploreProps) {
             filterByCategory={filterByCategory}
           />
 
-          <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
-            {bookList.map((book) => {
-              return (
-                <li key={uuid()} className="max-w-[324px] flex-grow">
-                  <BookCard book={book} />
-                </li>
-              )
-            })}
-          </ul>
+          <Dialog.Root>
+            <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
+              {bookList.map((book) => {
+                return (
+                  <li key={uuid()} className="max-w-[324px]">
+                    <BookCard
+                      book={book}
+                      handleSelectedBookId={handleSelectedBookId}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+
+            <DialogContent selectedBookId={selectedBookId} />
+          </Dialog.Root>
         </div>
       </section>
     </div>
