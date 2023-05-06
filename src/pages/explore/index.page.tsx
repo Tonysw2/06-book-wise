@@ -7,6 +7,7 @@ import { CategoryList } from './components/CategoryList'
 import { GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
 import { api } from '@/lib/axios'
+import { v4 as uuid } from 'uuid'
 
 type Book = {
   id: string
@@ -68,7 +69,7 @@ export default function Explore({ books, categories }: ExploreProps) {
           <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
             {bookList.map((book) => {
               return (
-                <li key={book.id} className="max-w-[324px] flex-grow">
+                <li key={uuid()} className="max-w-[324px] flex-grow">
                   <BookCard book={book} />
                 </li>
               )
