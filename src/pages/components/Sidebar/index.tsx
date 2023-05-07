@@ -23,7 +23,7 @@ export function Sidebar() {
   console.log(avatar)
 
   return (
-    <aside className="fixed top-5 bottom-5 ml-5 flex flex-col align-center justify-between bg-sidebar bg-cover bg-no-repeat py-10 px-12 rounded-xl">
+    <aside className="grow m-5 mr-0 flex flex-col align-center justify-between bg-sidebar bg-cover bg-no-repeat py-10 px-12 rounded-xl">
       <div>
         <Image src={Logo} alt="" className="mb-16" />
 

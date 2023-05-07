@@ -12,7 +12,7 @@ export function CategoryCard({
 }: CategoryCardProps) {
   return (
     <li
-      className={`keen-slider__slide py-1 px-4 rounded-full text-center cursor-pointer ${
+      className={`grow py-1 px-4 rounded-full text-center cursor-pointer ${
         activeCategory === name
           ? 'bg-purple-200 text-gray-100 border border-purple-200'
           : 'border border-purple-100 text-purple-100'

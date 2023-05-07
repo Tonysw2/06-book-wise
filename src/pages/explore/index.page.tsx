@@ -61,11 +61,13 @@ export default function Explore({ books, categories }: ExploreProps) {
   }
 
   return (
-    <div className="relative h-screen max-w-[1440px] mx-auto flex">
-      <Sidebar />
+    <div className="relative h-screen flex gap-10">
+      <div className="h-screen flex flex-col">
+        <Sidebar />
+      </div>
 
-      <section className="mt-16 mr-16 ml-80">
-        <div className="max-w-5xl pb-5 flex flex-col">
+      <div className="h-screen overflow-y-auto grow">
+        <section className="mt-16 mr-10 mb-5">
           <Header filterByQuery={filterByQuery} error={error} />
 
           <CategoryList
@@ -73,24 +75,20 @@ export default function Explore({ books, categories }: ExploreProps) {
             filterByCategory={filterByCategory}
           />
 
-          <Dialog.Root>
-            <ul className="grid grid-cols-3 gap-y-5 gap-x-5">
-              {bookList.map((book) => {
-                return (
-                  <li key={uuid()} className="max-w-[324px]">
-                    <BookCard
-                      book={book}
-                      handleSelectedBookId={handleSelectedBookId}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-
-            <DialogContent selectedBookId={selectedBookId} />
-          </Dialog.Root>
-        </div>
-      </section>
+          <ul className="grid grid-cols-3 gap-5 max-[1280px]:grid-cols-2 max-[1024px]:grid-cols-1">
+            {bookList.map((book) => {
+              return (
+                <li key={uuid()} className="grow">
+                  <BookCard
+                    book={book}
+                    handleSelectedBookId={handleSelectedBookId}
+                  />
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      </div>
     </div>
   )
 }

@@ -7,16 +7,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      screens: {
-        xm: { max: '350px' },
-        sm: { max: '640px' },
-        md: { max: '768px' },
-        lg: { max: '1024px' },
-        xl: { max: '1280px' },
-        '2xl': { max: '1440px' },
-        '3xl': { max: '1600px' },
-      },
-
       backgroundImage: {
         sidebar: "url('/sidebar-background.svg')",
 

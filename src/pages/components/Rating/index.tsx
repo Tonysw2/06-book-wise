@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
 interface RatingProps {
-  size: number
+  size?: number
   alowedToRate?: boolean
 }
 
-export function Rating({ size, alowedToRate = false }: RatingProps) {
+export function Rating({ size = 16, alowedToRate = false }: RatingProps) {
   const [ratingAmount, setRatingAmount] = useState(0)
 
   const ratingStars = 5

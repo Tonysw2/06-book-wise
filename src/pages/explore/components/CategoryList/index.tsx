@@ -51,7 +51,7 @@ export function CategoryList({
 
   return (
     <div className="relative mb-12">
-      <ul ref={sliderRef} className="keen-slider flex items-center">
+      <ul ref={sliderRef} className="flex items-center gap-3 overflow-auto">
         {categories.map((category) => {
           return (
             <CategoryCard
@@ -63,22 +63,6 @@ export function CategoryList({
           )
         })}
       </ul>
-      {loaded && instanceRef.current && (
-        <>
-          <SliderArrow
-            type="left"
-            currentSlide={currentSlide}
-            slidesPerView={slidesPerView}
-            instanceRef={instanceRef}
-          />
-          <SliderArrow
-            type="right"
-            currentSlide={currentSlide}
-            slidesPerView={slidesPerView}
-            instanceRef={instanceRef}
-          />
-        </>
-      )}
     </div>
   )
 }

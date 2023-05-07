@@ -23,7 +23,7 @@ export function Header({ filterByQuery, error }: HeaderProps) {
   }
 
   return (
-    <header className="mb-10 flex items-center justify-between">
+    <header className="mb-10 flex items-center justify-between gap-5">
       <PageTitle title={route.pathname} />
 
       <div className="relative max-w-md w-full">

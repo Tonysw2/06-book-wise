@@ -10,15 +10,15 @@ export default function Home() {
   const router = useRouter()
 
   return (
-    <div className="h-[100vh] max-w-[1440px] mx-auto grid grid-cols-[auto_1fr] place-items-center px-5 py-3 lg:grid-cols-1 lg:p-0">
+    <div className="h-[100vh] p-5 flex items-center">
       <Image
         src={HomeBg}
         alt=""
         quality={100}
-        className="h-full w-auto lg:hidden"
+        className="h-full w-auto max-[768px]:hidden"
       />
 
-      <section className="flex items-center justify-center">
+      <section className="grow flex items-center justify-center">
         <div className="w-[372px] ml-5 lg:m-0 sm:w-min-max sm:p-5">
           <div className="mb-10 md:text-center">
             <h2 className="font-bold leading-short text-2xl text-gray-100">

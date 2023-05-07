@@ -1,28 +1,25 @@
 import { AvatarUI } from '@/pages/components/Avatar'
+import { Rating } from '@/pages/components/Rating'
 import Image from 'next/image'
 
 export function ReviewCard() {
   return (
-    <article className="max-h-[300px] max-w-[608px] p-6 flex flex-col justify-center gap-8 rounded-lg bg-gray-700">
-      <header className="flex items-start">
+    <article className="max-h-[300px] p-6 flex flex-col justify-center gap-8 rounded-lg bg-gray-700">
+      <header className="flex items-start gap-4">
         <AvatarUI />
 
-        <div className="ml-4">
+        <div className="grow">
           <p>Anthony Ribeiro</p>
           <time className="text-sm text-gray-400">Hoje</time>
         </div>
+
+        <Rating />
       </header>
 
-      <div className="flex items-center gap-5">
-        <Image
-          src={'https://m.media-amazon.com/images/I/91M9xPIf10L.jpg'}
-          alt=""
-          width={108}
-          height={152}
-          className="rounded-sm"
-        />
+      <div className="flex gap-5">
+        <Image src="" alt="" className="h-full w-auto rounded-sm" />
 
-        <div className="flex flex-col items-start justify-center gap-5">
+        <div className="flex flex-col justify-between gap-5">
           <div>
             <h3 className="font-bold leading-short">O Hobbit</h3>
             <p className="text-sm text-gray-400">J.R.R Tolkien</p>
