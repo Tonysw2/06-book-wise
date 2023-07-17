@@ -1,7 +1,7 @@
-import { MagnifyingGlass, User } from '@phosphor-icons/react'
-import { Sidebar } from '../components/Sidebar'
+import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
 import { PageTitle } from '../components/PageTitle'
+import { Sidebar } from '../components/Sidebar'
 
 export default function Profile() {
   const route = useRouter()

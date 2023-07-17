@@ -1,15 +1,13 @@
+import { api } from '@/lib/axios'
+import { prisma } from '@/lib/prisma'
 import { Sidebar } from '@/pages/components/Sidebar'
 import 'keen-slider/keen-slider.min.css'
-import { useState } from 'react'
-import { BookCard } from './components/BookCard'
-import { Header } from './components/Header'
-import { CategoryList } from './components/CategoryList'
 import { GetStaticProps } from 'next'
-import { prisma } from '@/lib/prisma'
-import { api } from '@/lib/axios'
+import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
-import * as Dialog from '@radix-ui/react-dialog'
-import { DialogContent } from './components/DialogContent'
+import { BookCard } from './components/BookCard'
+import { CategoryList } from './components/CategoryList'
+import { Header } from './components/Header'
 
 type Book = {
   id: string
@@ -61,33 +59,35 @@ export default function Explore({ books, categories }: ExploreProps) {
   }
 
   return (
-    <div className="relative h-screen flex gap-10">
-      <div className="h-screen flex flex-col">
-        <Sidebar />
-      </div>
+    <div className="flex items-center justify-center">
+      <div className="max-w-[1440px] relative h-screen flex item-center gap-10">
+        <div className="h-screen flex flex-col">
+          <Sidebar />
+        </div>
 
-      <div className="h-screen overflow-y-auto grow">
-        <section className="mt-16 mr-10 mb-5">
-          <Header filterByQuery={filterByQuery} error={error} />
+        <div className="h-screen overflow-y-auto grow">
+          <section className="mt-16 mr-10 mb-5">
+            <Header filterByQuery={filterByQuery} error={error} />
 
-          <CategoryList
-            categories={categories}
-            filterByCategory={filterByCategory}
-          />
+            <CategoryList
+              categories={categories}
+              filterByCategory={filterByCategory}
+            />
 
-          <ul className="grid grid-cols-3 gap-5 max-[1280px]:grid-cols-2 max-[1024px]:grid-cols-1">
-            {bookList.map((book) => {
-              return (
-                <li key={uuid()} className="grow">
-                  <BookCard
-                    book={book}
-                    handleSelectedBookId={handleSelectedBookId}
-                  />
-                </li>
-              )
-            })}
-          </ul>
-        </section>
+            <ul className="grid grid-cols-3 gap-5 max-[1280px]:grid-cols-2 max-[1024px]:grid-cols-1">
+              {bookList.map((book) => {
+                return (
+                  <li key={uuid()} className="grow">
+                    <BookCard
+                      book={book}
+                      handleSelectedBookId={handleSelectedBookId}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        </div>
       </div>
     </div>
   )

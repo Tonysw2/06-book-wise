@@ -17,7 +17,6 @@ export default async function handler(
       OR: [{ author: { contains: String(query) } }],
     },
   })
-  console.log(filteredBooksByQuery)
 
   if (filteredBooksByQuery.length < 1) {
     return res

@@ -1,69 +1,105 @@
-import { CaretRight, ChartLineUp } from '@phosphor-icons/react'
-import { Sidebar } from '../components/Sidebar'
-import { ReviewCard } from './components/ReviewCard'
-import Link from 'next/link'
-import { BookCard } from './components/BookCard'
-import { books } from '../../../prisma/constants/books'
-import { PageTitle } from '../components/PageTitle'
+import { CaretRight } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
-import { GetServerSideProps } from 'next'
+import { v4 as uuid } from 'uuid'
+import { BookCardRead } from '../components/BookCardRead'
+import { LinkUI } from '../components/LinkUI'
+import { PageTitle } from '../components/PageTitle'
+import { Sidebar } from '../components/Sidebar'
+import { BookCard } from './components/BookCard'
+import { ReviewCard } from './components/ReviewCard'
 
-export default function GuestIntroduction() {
+interface GuestIntroductionProps {
+  usersRatings: {
+    created_at: string
+    id: string
+    rate: number
+    description: string
+    book_id: string
+    user_id: string
+    user: {
+      name: string
+      avatar_url: string | null
+    }
+    book: {
+      name: string
+      author: string
+      cover_url: string
+    }
+  }[]
+}
+
+export default function GuestIntroduction({
+  usersRatings,
+}: GuestIntroductionProps) {
   const route = useRouter()
 
   return (
-    <div className="relative h-screen flex gap-10">
-      <div className="flex flex-col">
+    <div className="h-screen flex items-center justify-center">
+      <div className="max-w-[1440px] w-full h-full flex gap-24">
         <Sidebar />
-      </div>
 
-      <div className="grow h-screen overflow-y-auto">
-        <section className="mt-16 mr-10 flex flex-col gap-10">
+        <div className="w-full flex flex-col gap-10 max-w-[608px] overflow-scroll">
           <PageTitle title={route.pathname} />
 
-          <div className="flex gap-16 max-[1024px]:flex-col">
-            <div className="grow flex flex-col gap-4">
-              <h2 className="text-sm">Avaliações mais recentes</h2>
+          <div className="flex gap-16">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-100">Sua leitura</p>
 
-              <ul className="mb-5 flex flex-col gap-3">
-                <li>
-                  <ReviewCard />
-                </li>
-                <li>
-                  <ReviewCard />
-                </li>
-                <li>
-                  <ReviewCard />
-                </li>
-              </ul>
-            </div>
-
-            <div className="max-w-[324px] w-full flex flex-col gap-4 max-[1024px]:-order-1">
-              <div className="flex items-center justify-between gap-5">
-                <h2 className="text-sm">Livros populares</h2>
-
-                <Link
-                  href="/explore"
-                  className="flex items-center gap-2 font-bold text-sm text-purple-100"
-                >
-                  Ver todos <CaretRight size={16} />
-                </Link>
+                <LinkUI route="" text="Ver todas" icon={CaretRight} />
               </div>
 
-              <ul className="flex flex-col gap-3">
-                {books
-                  .filter((book) => book.total_pages > 350)
-                  .map((book) => {
-                    return (
-                      <li key={book.id}>
-                        <BookCard book={book} />
-                      </li>
-                    )
-                  })}
-              </ul>
+              <BookCardRead url="/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png" />
             </div>
           </div>
-        </section>
+
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-gray-100">Avaliações mais recentes</p>
+
+            <ul className="flex flex-col gap-3">
+              {Array.from({ length: 3 }).map(() => (
+                <ReviewCard
+                  key={uuid()}
+                  data={{
+                    username: 'Maria Silva',
+                    avatarUrl: '',
+                    date: '14/07/2023',
+                    bookName: 'O Pequeno Príncipe',
+                    author: 'Antoine de Saint-Exupéry',
+                    coverUrl:
+                      '/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png',
+                    description:
+                      'O Pequeno Príncipe é uma obra do escritor francês Antoine de Saint-Exupéry, publicada em 1943. A história é um misto de conto de fadas e filosofia, que aborda temas como a importância das relações humanas e a simplicidade da infância.',
+                  }}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="w-full max-w-[324px] flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-100">Sua leitura</p>
+            <LinkUI route="" text="Ver todas" icon={CaretRight} />
+          </div>
+
+          <ul className="flex flex-col gap-3">
+            {Array.from({ length: 2 }).map(() => {
+              return (
+                <BookCard
+                  key={uuid()}
+                  book={{
+                    name: 'Hobbit',
+                    author: 'JRR',
+                    cover_url:
+                      '/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png',
+                    id: 'jiejd',
+                  }}
+                />
+              )
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   )

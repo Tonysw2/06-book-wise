@@ -28,7 +28,7 @@ export function PageTitle({ title }: PageTitleProps) {
   }
 
   return (
-    <h1 className="flex items-center gap-3 font-bold text-2xl leading-short capitalize">
+    <h1 className="mt-14 flex items-center gap-3 font-bold text-2xl leading-short capitalize">
       {icon} {text}
     </h1>
   )

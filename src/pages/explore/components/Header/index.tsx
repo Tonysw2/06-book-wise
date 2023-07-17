@@ -1,5 +1,5 @@
 import { PageTitle } from '@/pages/components/PageTitle'
-import { Binoculars, MagnifyingGlass } from '@phosphor-icons/react'
+import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
 import { ChangeEvent, FormEvent, useState } from 'react'
 

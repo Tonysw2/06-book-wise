@@ -1,6 +1,5 @@
 import { Rating } from '@/pages/components/Rating'
 import Image from 'next/image'
-import * as Dialog from '@radix-ui/react-dialog'
 
 interface BookCardProps {
   book: {
