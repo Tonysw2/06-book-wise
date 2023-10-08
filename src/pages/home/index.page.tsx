@@ -10,53 +10,51 @@ export default function Home() {
   const router = useRouter()
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="max-w-[1440px] w-full p-5 flex">
+    <main className="flex h-screen w-full items-center justify-center p-5">
+      <div className=" flex h-full w-full items-center">
         <Image
           src={HomeBg}
-          alt=""
           quality={100}
-          className="h-full w-auto max-[768px]:hidden"
+          alt="logo"
+          height={912}
+          width={598}
+          className="h-full w-auto rounded max-lg:hidden"
         />
 
-        <section className="grow flex items-center justify-center">
-          <div className="w-[372px] ml-5 lg:m-0 sm:w-min-max sm:p-5">
-            <div className="mb-10 md:text-center">
-              <h2 className="font-bold leading-short text-2xl text-gray-100">
+        <section className="flex w-full items-center justify-center">
+          <div className="flex w-full max-w-[372px] flex-col gap-10">
+            <div>
+              <h1 className="text-2xl font-bold leading-short text-gray-100">
                 Boas vindas!
-              </h2>
-              <p className="font-regular text-md text-gray-200">
+              </h1>
+              <p className="text-gray-200">
                 Faça seu login ou acesse como visitante.
               </p>
             </div>
 
-            <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex flex-col gap-4">
               <button
-                className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold sm:p-3"
-                onClick={() => {
-                  signIn('google')
-                }}
+                onClick={() => signIn('google')}
+                className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700"
               >
-                <FcGoogle className="h-8 w-8 mr-5" />
-                Google
+                <FcGoogle size={32} />
+                Entrar com o Google
               </button>
-
-              <button className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold sm:p-3">
-                <FaGithub className="h-8 w-8 mr-5" />
-                GitHub
+              <button className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700">
+                <FaGithub size={32} />
+                Entrar com o GitHub
               </button>
-
               <button
                 onClick={() => router.push('/introduction')}
-                className="flex items-center justify-start grow-0 w-full py-5 px-6 bg-gray-600 rounded-lg text-lg font-bold sm:p-3"
+                className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700"
               >
-                <IoRocketOutline className="h-8 w-8 mr-5 text-purple-100" />
-                Acesse como visitante
+                <IoRocketOutline size={32} className="text-purple-100" />
+                Acessar como visitante
               </button>
             </div>
           </div>
         </section>
       </div>
-    </div>
+    </main>
   )
 }
