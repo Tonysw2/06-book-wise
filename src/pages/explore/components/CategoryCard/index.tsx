@@ -1,25 +1,25 @@
-import { ComponentProps, useState } from 'react'
+import Link from 'next/link'
+import { ComponentProps, ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-interface CategoryCardProps extends ComponentProps<'li'> {
-  name: string
-  activeCategory: string
+interface CategoryCardProps extends ComponentProps<typeof Link> {
+  children: ReactNode
 }
 
 export function CategoryCard({
-  name,
-  activeCategory,
+  children,
+  className,
   ...rest
 }: CategoryCardProps) {
   return (
-    <li
-      className={`grow py-1 px-4 rounded-full text-center cursor-pointer ${
-        activeCategory === name
-          ? 'bg-purple-200 text-gray-100 border border-purple-200'
-          : 'border border-purple-100 text-purple-100'
-      }`}
+    <Link
+      className={twMerge(
+        'flex cursor-pointer items-center justify-center rounded-full border border-purple-100 px-4 py-1 text-center text-purple-100 transition-all hover:border-purple-100 hover:bg-purple-200 hover:text-gray-200',
+        className,
+      )}
       {...rest}
     >
-      {name}
-    </li>
+      {children}
+    </Link>
   )
 }
