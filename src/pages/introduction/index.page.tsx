@@ -11,6 +11,7 @@ import { getLastRead } from '@/utils/https'
 import { CaretRight, Spinner } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 export default function Introduction() {
@@ -53,57 +54,63 @@ export default function Introduction() {
   }
 
   return (
-    <main className="grid place-items-center overflow-hidden px-5">
-      <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(452px,608px)_minmax(264px,324px)] grid-rows-[min-content_1fr] gap-x-16 overflow-hidden">
-        <div className="row-span-full my-5">
-          <Sidebar />
-        </div>
+    <>
+      <Head>
+        <title>Book Wise | Introdução</title>
+      </Head>
 
-        <div className="col-start-2 col-end-4 mb-10 mt-14">
-          <PageTitle title={route.pathname} />
-        </div>
+      <main className="grid place-items-center overflow-hidden px-5">
+        <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(452px,608px)_minmax(264px,324px)] grid-rows-[min-content_1fr] gap-x-16 overflow-hidden">
+          <div className="row-span-full my-5">
+            <Sidebar />
+          </div>
 
-        <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
-          {session.status === 'authenticated' && (
-            <div className="mb-10 flex flex-col gap-4">
+          <div className="col-start-2 col-end-4 mb-10 mt-14">
+            <PageTitle title={route.pathname} />
+          </div>
+
+          <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
+            {session.status === 'authenticated' && (
+              <div className="mb-10 flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm">Sua última leitura</p>
+                  <LinkUI
+                    asLink
+                    size="small"
+                    href="/explore"
+                    text="Ver todas"
+                    iconRight={CaretRight}
+                  />
+                </div>
+
+                {content}
+              </div>
+            )}
+
+            <div className="flex flex-col gap-4">
+              <p className="text-sm">Avaliações mais recentes</p>
+              <ReviewList />
+            </div>
+          </div>
+
+          <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
+            <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <p className="text-sm">Sua última leitura</p>
+                <p className="text-sm">Livros populares</p>
                 <LinkUI
                   asLink
                   size="small"
                   href="/explore"
-                  text="Ver todas"
+                  text="Ver todos"
                   iconRight={CaretRight}
                 />
               </div>
 
-              {content}
+              <PopularList />
             </div>
-          )}
-
-          <div className="flex flex-col gap-4">
-            <p className="text-sm">Avaliações mais recentes</p>
-            <ReviewList />
           </div>
         </div>
-
-        <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm">Livros populares</p>
-              <LinkUI
-                asLink
-                size="small"
-                href="/explore"
-                text="Ver todos"
-                iconRight={CaretRight}
-              />
-            </div>
-
-            <PopularList />
-          </div>
-        </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }

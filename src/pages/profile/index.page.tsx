@@ -18,6 +18,7 @@ import {
 } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 
@@ -99,77 +100,83 @@ export default function Profile() {
   }
 
   return (
-    <main className="grid place-items-center overflow-hidden px-5">
-      <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(0,624px)_minmax(0,308px)] grid-rows-[min-content_1fr] overflow-hidden">
-        <div className="row-span-full mr-24 py-5">
-          <Sidebar />
-        </div>
+    <>
+      <Head>
+        <title>Book Wise | Perfil</title>
+      </Head>
 
-        <div className="col-start-2 col-end-4 mb-10 mt-16">
-          <PageTitle title={route.pathname} />
-        </div>
+      <main className="grid place-items-center overflow-hidden px-5">
+        <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(0,624px)_minmax(0,308px)] grid-rows-[min-content_1fr] overflow-hidden">
+          <div className="row-span-full mr-24 py-5">
+            <Sidebar />
+          </div>
 
-        <div className="mr-16 flex flex-col gap-8 overflow-hidden">
-          <Form.Root>
-            <Form.Input
-              placeholder="Buscar livro avaliado"
-              value={query}
-              onChange={handleQuery}
-            />
-            <Form.ButtonIcon
-              disabled
-              icon={MagnifyingGlass}
-            />
-          </Form.Root>
+          <div className="col-start-2 col-end-4 mb-10 mt-16">
+            <PageTitle title={route.pathname} />
+          </div>
 
-          {content}
-        </div>
-
-        <div>
-          <div className="flex w-full flex-col items-center gap-8 border-l border-gray-700">
-            <div className="flex flex-col items-center gap-5">
-              <AvatarUI
-                className="h-18 w-18"
-                url="https://github.com/tonysw2.png"
+          <div className="mr-16 flex flex-col gap-8 overflow-hidden">
+            <Form.Root>
+              <Form.Input
+                placeholder="Buscar livro avaliado"
+                value={query}
+                onChange={handleQuery}
               />
+              <Form.ButtonIcon
+                disabled
+                icon={MagnifyingGlass}
+              />
+            </Form.Root>
 
-              <div className="flex flex-col items-center">
-                <p className="text-center text-xl font-bold leading-short">
-                  Anthony Ribeiro
-                </p>
-                <p className="text-center text-sm text-gray-400">
-                  membro desde 2023
-                </p>
+            {content}
+          </div>
+
+          <div>
+            <div className="flex w-full flex-col items-center gap-8 border-l border-gray-700">
+              <div className="flex flex-col items-center gap-5">
+                <AvatarUI
+                  className="h-18 w-18"
+                  url="https://github.com/tonysw2.png"
+                />
+
+                <div className="flex flex-col items-center">
+                  <p className="text-center text-xl font-bold leading-short">
+                    Anthony Ribeiro
+                  </p>
+                  <p className="text-center text-sm text-gray-400">
+                    membro desde 2023
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="h-1 w-8 rounded-full bg-gradient-horizontal" />
+              <div className="h-1 w-8 rounded-full bg-gradient-horizontal" />
 
-            <div className="flex flex-col gap-10 px-14 py-5">
-              <ProfileStats
-                icon={BookOpen}
-                title={String(data?.pagesRead)}
-                description="Páginas lidas"
-              />
-              <ProfileStats
-                icon={Books}
-                title={String(data?.reviewedBooks)}
-                description="Livros avaliados"
-              />
-              <ProfileStats
-                icon={UserList}
-                title={String(data?.readAuthors)}
-                description="Autores lidos"
-              />
-              <ProfileStats
-                icon={BookmarkSimple}
-                title={String(data?.mostReadCategory)}
-                description="Categoria mais lida"
-              />
+              <div className="flex flex-col gap-10 px-14 py-5">
+                <ProfileStats
+                  icon={BookOpen}
+                  title={String(data?.pagesRead)}
+                  description="Páginas lidas"
+                />
+                <ProfileStats
+                  icon={Books}
+                  title={String(data?.reviewedBooks)}
+                  description="Livros avaliados"
+                />
+                <ProfileStats
+                  icon={UserList}
+                  title={String(data?.readAuthors)}
+                  description="Autores lidos"
+                />
+                <ProfileStats
+                  icon={BookmarkSimple}
+                  title={String(data?.mostReadCategory)}
+                  description="Categoria mais lida"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
