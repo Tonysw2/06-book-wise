@@ -1,106 +1,109 @@
-import { CaretRight } from '@phosphor-icons/react'
+import { BookCard } from '@/components/BookCard'
+import { LastReadCard } from '@/components/LastReadCard'
+import { LinkUI } from '@/components/LinkUI'
+import { PageTitle } from '@/components/PageTitle'
+import { PopularList } from '@/components/PopularList'
+import { ReviewList } from '@/components/ReviewList'
+import { Sidebar } from '@/components/Sidebar'
+import { QUERY_KEYS } from '@/constants/queryKeys'
+import { UserDTO } from '@/dtos/UserDTO'
+import { getLastRead } from '@/utils/https'
+import { CaretRight, Spinner } from '@phosphor-icons/react'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { v4 as uuid } from 'uuid'
-import { BookCardRead } from '../components/BookCardRead'
-import { LinkUI } from '../components/LinkUI'
-import { PageTitle } from '../components/PageTitle'
-import { Sidebar } from '../components/Sidebar'
-import { BookCard } from './components/BookCard'
-import { ReviewCard } from './components/ReviewCard'
 
-interface GuestIntroductionProps {
-  usersRatings: {
-    created_at: string
-    id: string
-    rate: number
-    description: string
-    book_id: string
-    user_id: string
-    user: {
-      name: string
-      avatar_url: string | null
-    }
-    book: {
-      name: string
-      author: string
-      cover_url: string
-    }
-  }[]
-}
-
-export default function GuestIntroduction({
-  usersRatings,
-}: GuestIntroductionProps) {
+export default function Introduction() {
   const route = useRouter()
+  const session = useSession()
+
+  const {
+    data: lastRead,
+    isPending,
+    isError,
+  } = useQuery<UserDTO>({
+    queryKey: [QUERY_KEYS.LAST_READ, session.data?.user.email],
+    queryFn: ({ signal }) => getLastRead({ signal }),
+  })
+
+  let content
+
+  if (isError) {
+    content = (
+      <p className="text-sm text-red-500">
+        Não foi possível obter sua última leitura, tente mais tarde.
+      </p>
+    )
+  }
+
+  if (isPending) {
+    content = <Spinner className="h-5 w-5 animate-spin" />
+  }
+
+  if (lastRead) {
+    if (lastRead.ratings.length === 0) {
+      content = (
+        <p className="text-sm">
+          Você ainda não tem leituras concluídas para exibir.
+        </p>
+      )
+    } else {
+      content = <LastReadCard data={lastRead} />
+    }
+  }
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="max-w-[1440px] w-full h-full flex gap-24">
-        <Sidebar />
+    <main className="grid place-items-center overflow-hidden px-5">
+      <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(452px,608px)_minmax(264px,324px)] grid-rows-[min-content_1fr] gap-x-16 overflow-hidden">
+        <div className="row-span-full my-5">
+          <Sidebar />
+        </div>
 
-        <div className="w-full flex flex-col gap-10 max-w-[608px] overflow-scroll">
+        <div className="col-start-2 col-end-4 mb-10 mt-14">
           <PageTitle title={route.pathname} />
+        </div>
 
-          <div className="flex gap-16">
-            <div className="flex flex-col gap-4">
+        <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
+          {session.status === 'authenticated' && (
+            <div className="mb-10 flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-100">Sua leitura</p>
-
-                <LinkUI route="" text="Ver todas" icon={CaretRight} />
+                <p className="text-sm">Sua última leitura</p>
+                <LinkUI
+                  asLink
+                  size="small"
+                  href="/explore"
+                  text="Ver todas"
+                  iconRight={CaretRight}
+                />
               </div>
 
-              <BookCardRead url="/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png" />
+              {content}
             </div>
-          </div>
+          )}
 
           <div className="flex flex-col gap-4">
-            <p className="text-sm text-gray-100">Avaliações mais recentes</p>
-
-            <ul className="flex flex-col gap-3">
-              {Array.from({ length: 3 }).map(() => (
-                <ReviewCard
-                  key={uuid()}
-                  data={{
-                    username: 'Maria Silva',
-                    avatarUrl: '',
-                    date: '14/07/2023',
-                    bookName: 'O Pequeno Príncipe',
-                    author: 'Antoine de Saint-Exupéry',
-                    coverUrl:
-                      '/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png',
-                    description:
-                      'O Pequeno Príncipe é uma obra do escritor francês Antoine de Saint-Exupéry, publicada em 1943. A história é um misto de conto de fadas e filosofia, que aborda temas como a importância das relações humanas e a simplicidade da infância.',
-                  }}
-                />
-              ))}
-            </ul>
+            <p className="text-sm">Avaliações mais recentes</p>
+            <ReviewList />
           </div>
         </div>
 
-        <div className="w-full max-w-[324px] flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-100">Sua leitura</p>
-            <LinkUI route="" text="Ver todas" icon={CaretRight} />
-          </div>
+        <div className="overflow-y-auto pb-5 pr-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full scrollbar-w-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm">Livros populares</p>
+              <LinkUI
+                asLink
+                size="small"
+                href="/explore"
+                text="Ver todos"
+                iconRight={CaretRight}
+              />
+            </div>
 
-          <ul className="flex flex-col gap-3">
-            {Array.from({ length: 2 }).map(() => {
-              return (
-                <BookCard
-                  key={uuid()}
-                  book={{
-                    name: 'Hobbit',
-                    author: 'JRR',
-                    cover_url:
-                      '/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png',
-                    id: 'jiejd',
-                  }}
-                />
-              )
-            })}
-          </ul>
+            <PopularList />
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

@@ -1,4 +1,4 @@
-import { signIn } from 'next-auth/react'
+import { SignInButton } from '@/components/SignInButton'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FaGithub } from 'react-icons/fa'
@@ -7,8 +7,6 @@ import { IoRocketOutline } from 'react-icons/io5'
 import HomeBg from '../../../public/bg-home.png'
 
 export default function SignIn() {
-  const router = useRouter()
-
   return (
     <main className="flex h-screen w-full items-center justify-center p-5">
       <div className="flex h-full w-full max-w-[1440px] items-center">
@@ -33,24 +31,20 @@ export default function SignIn() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <button
-                onClick={() => signIn('google')}
-                className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700"
-              >
-                <FcGoogle size={32} />
-                Entrar com o Google
-              </button>
-              <button className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700">
-                <FaGithub size={32} />
-                Entrar com o GitHub
-              </button>
-              <button
-                onClick={() => router.push('/introduction')}
-                className="flex items-center justify-start gap-5 rounded-lg bg-gray-600 px-6 py-5 text-lg font-bold text-gray-200 transition-all hover:bg-gray-700"
-              >
-                <IoRocketOutline size={32} className="text-purple-100" />
-                Acessar como visitante
-              </button>
+              <SignInButton
+                text="Entrar com o Google"
+                icon={FcGoogle}
+                provider="google"
+              />
+              <SignInButton
+                text="Entrar com o GitHub"
+                icon={FaGithub}
+                provider="github"
+              />
+              <SignInButton
+                text="Entrar como visitante"
+                icon={IoRocketOutline}
+              />
             </div>
           </div>
         </section>

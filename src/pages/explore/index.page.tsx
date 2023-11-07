@@ -1,117 +1,134 @@
-import { api } from '@/lib/axios'
-import { prisma } from '@/lib/prisma'
-import { Sidebar } from '@/pages/components/Sidebar'
-import 'keen-slider/keen-slider.min.css'
-import { GetStaticProps } from 'next'
-import { useState } from 'react'
-import { v4 as uuid } from 'uuid'
-import { BookCard } from './components/BookCard'
-import { CategoryList } from './components/CategoryList'
-import { Header } from './components/Header'
+import { BookCard } from '@/components/BookCard'
+import { BookDetailsDialog } from '@/components/BookDetailsDialog'
+import { CategoryList } from '@/components/CategoryList'
+import { Form } from '@/components/Form/SearchInput'
+import { PageTitle } from '@/components/PageTitle'
+import { Sidebar } from '@/components/Sidebar'
+import { QUERY_KEYS } from '@/constants/queryKeys'
+import { BookDTO } from '@/dtos/BookDTO'
+import { CategoryDTO } from '@/dtos/CategoryDTO'
+import { getBooksByCategory } from '@/utils/https'
+import { MagnifyingGlass, Spinner } from '@phosphor-icons/react'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { ChangeEvent, useState } from 'react'
 
-type Book = {
-  id: string
-  name: string
-  author: string
-  categories: { name: string; id: string }[]
-  cover_url: string
-}
+export default function Explore() {
+  const session = useSession()
 
-type Category = {
-  id: string
-  name: string
-}
+  const [query, setQuery] = useState('')
+  const [activeCategory, setActiveCategory] = useState<CategoryDTO>({
+    id: '1',
+    name: 'Todos',
+  })
 
-interface ExploreProps {
-  books: Book[]
-  categories: Category[]
-}
+  const router = useRouter()
 
-export default function Explore({ books, categories }: ExploreProps) {
-  const [bookList, setBookList] = useState(books)
-  const [error, setError] = useState(null)
-  const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
+  const {
+    data: books,
+    isPending,
+    isError,
+  } = useQuery<BookDTO[]>({
+    queryKey: [QUERY_KEYS.BOOKS, activeCategory],
+    queryFn: ({ signal }) =>
+      getBooksByCategory({ signal, category: activeCategory }),
+  })
 
-  async function filterByCategory(selectedCategoryId: string) {
-    try {
-      const res = await api.get(`/books?categoryId=${selectedCategoryId}`)
-      const filteredBooksByCategory = res.data
-      setBookList(filteredBooksByCategory)
-      setError(null)
-    } catch (error: any) {
-      setError(error.response.data.message)
-    }
+  function handleActiveCategory(category: CategoryDTO) {
+    setActiveCategory(category)
+    setQuery('')
   }
 
-  async function filterByQuery(query: string) {
-    try {
-      const res = await api.get(`/books/search?query=${query}`)
-      const filteredBooksByQuery = res.data
-      setBookList(filteredBooksByQuery)
-      setError(null)
-    } catch (error: any) {
-      setError(error.response.data.message)
-    }
+  function handleQuery(event: ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value)
   }
 
-  function handleSelectedBookId(id: string) {
-    setSelectedBookId(id)
+  let content
+
+  if (isPending) {
+    content = (
+      <p className="flex items-center gap-1">
+        <Spinner className="animate-spin" /> Loading...
+      </p>
+    )
+  }
+
+  if (isError) {
+    content = (
+      <p className="text-sm text-red-500">
+        Não foi possível obter os livros, tente mais tarde.
+      </p>
+    )
+  }
+
+  if (books) {
+    const filteredBooks = books?.filter((book) => {
+      return (
+        book.name.toLocaleLowerCase().includes(query.toLowerCase().trim()) ||
+        book.author.toLocaleLowerCase().includes(query.toLowerCase().trim())
+      )
+    })
+
+    if (filteredBooks.length === 0) {
+      content = (
+        <p className="text-sm text-gray-300">Nenhum livro encontrado.</p>
+      )
+    } else {
+      content = (
+        <ul className="grid grid-cols-3 gap-5">
+          {filteredBooks.map((book) => {
+            const alreadyRead = book.ratings.find(
+              (rating) => rating.user.email === session.data?.user.email,
+            )
+
+            return (
+              <li key={book.id}>
+                <BookDetailsDialog book={book}>
+                  <BookCard
+                    data={book}
+                    alreadyRead={!!alreadyRead}
+                  />
+                </BookDetailsDialog>
+              </li>
+            )
+          })}
+        </ul>
+      )
+    }
   }
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="max-w-[1440px] relative h-screen flex item-center gap-10">
-        <div className="h-screen flex flex-col">
+    <main className="grid place-items-center px-5">
+      <div className="grid h-screen w-full max-w-[1440px] grid-cols-[min-content_minmax(0,996px)] grid-rows-[min-content_min-content_1fr] overflow-hidden">
+        <div className="row-span-full mr-24 py-5">
           <Sidebar />
         </div>
 
-        <div className="h-screen overflow-y-auto grow">
-          <section className="mt-16 mr-10 mb-5">
-            <Header filterByQuery={filterByQuery} error={error} />
+        <header className="mb-10 mt-14 flex h-min w-full items-center justify-between">
+          <PageTitle title={router.pathname} />
 
-            <CategoryList
-              categories={categories}
-              filterByCategory={filterByCategory}
+          <Form.Root className="max-w-md">
+            <Form.Input
+              type="text"
+              value={query}
+              onChange={handleQuery}
+              placeholder="Busque por um livro ou autor"
             />
+            <Form.ButtonIcon
+              disabled
+              icon={MagnifyingGlass}
+            />
+          </Form.Root>
+        </header>
 
-            <ul className="grid grid-cols-3 gap-5 max-[1280px]:grid-cols-2 max-[1024px]:grid-cols-1">
-              {bookList.map((book) => {
-                return (
-                  <li key={uuid()} className="grow">
-                    <BookCard
-                      book={book}
-                      handleSelectedBookId={handleSelectedBookId}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-          </section>
-        </div>
+        <CategoryList
+          activeCategory={activeCategory}
+          handleActiveCategory={handleActiveCategory}
+        />
+
+        <div className="overflow-y-auto pb-5 pt-5">{content}</div>
       </div>
-    </div>
+    </main>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const [books, categories] = await Promise.all([
-    prisma.book.findMany({
-      select: {
-        id: true,
-        name: true,
-        author: true,
-        categories: true,
-        cover_url: true,
-      },
-    }),
-    prisma.category.findMany(),
-  ])
-
-  return {
-    props: {
-      books,
-      categories,
-    },
-    revalidate: 60 * 60 * 24, // 1 dia
-  }
 }

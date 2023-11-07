@@ -21,6 +21,14 @@ module.exports = {
         'gradient-arrow-right':
           'linear-gradient(to right, transparent 0%, #0E1116 70%)',
       },
+
+      height: {
+        18: '4.5rem',
+      },
+
+      width: {
+        18: '4.5rem',
+      },
     },
 
     fontFamily: {
@@ -73,5 +81,6 @@ module.exports = {
       tall: '180%',
     },
   },
-  plugins: [],
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 }

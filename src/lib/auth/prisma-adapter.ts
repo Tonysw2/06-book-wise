@@ -7,6 +7,8 @@ export function PrismaAdapter(): Adapter {
       const newUser = await prisma.user.create({
         data: {
           name: user.name,
+          email: user.email,
+          avatar_url: user.avatar_url,
         },
       })
 
@@ -44,7 +46,7 @@ export function PrismaAdapter(): Adapter {
     async getUserByEmail(email) {
       const user = await prisma.user.findUnique({
         where: {
-          email: email,
+          email,
         },
       })
 

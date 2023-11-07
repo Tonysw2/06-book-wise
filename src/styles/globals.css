@@ -5,9 +5,3 @@
 ::-webkit-scrollbar {
   width: 0;
 }
-
-@layer utilities {
-  .w-min-max {
-    width: min(372px, 100%);
-  }
-}
