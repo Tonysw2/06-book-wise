@@ -56,7 +56,7 @@ export default function Introduction() {
   return (
     <>
       <Head>
-        <title>Book Wise | Introdução</title>
+        <title>Introdução | Book Wise</title>
       </Head>
 
       <main className="grid place-items-center overflow-hidden px-5">

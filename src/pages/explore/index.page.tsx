@@ -102,7 +102,7 @@ export default function Explore() {
   return (
     <>
       <Head>
-        <title>Book Wise | Explorar</title>
+        <title>Explorar | Book Wise</title>
       </Head>
 
       <main className="grid place-items-center px-5">

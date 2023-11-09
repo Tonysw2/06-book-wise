@@ -10,7 +10,7 @@ export default function SignIn() {
   return (
     <>
       <Head>
-        <title>Book Wise | Login</title>
+        <title>Login | Book Wise</title>
       </Head>
 
       <main className="flex h-screen w-full items-center justify-center p-5">

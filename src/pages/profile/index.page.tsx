@@ -102,7 +102,7 @@ export default function Profile() {
   return (
     <>
       <Head>
-        <title>Book Wise | Perfil</title>
+        <title>Perfil | Book Wise</title>
       </Head>
 
       <main className="grid place-items-center overflow-hidden px-5">
