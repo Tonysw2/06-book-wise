@@ -1,14 +1,14 @@
-import { BookCard } from '@/components/BookCard'
 import { LastReadCard } from '@/components/LastReadCard'
 import { LinkUI } from '@/components/LinkUI'
 import { PageTitle } from '@/components/PageTitle'
 import { PopularList } from '@/components/PopularList'
 import { ReviewList } from '@/components/ReviewList'
 import { Sidebar } from '@/components/Sidebar'
+import { SkeletonCard } from '@/components/SkeletonCard'
 import { QUERY_KEYS } from '@/constants/queryKeys'
 import { UserDTO } from '@/dtos/UserDTO'
 import { getLastRead } from '@/utils/https'
-import { CaretRight, Spinner } from '@phosphor-icons/react'
+import { CaretRight } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
@@ -38,7 +38,7 @@ export default function Introduction() {
   }
 
   if (isPending) {
-    content = <Spinner className="h-5 w-5 animate-spin" />
+    content = <SkeletonCard size="sm" />
   }
 
   if (lastRead) {

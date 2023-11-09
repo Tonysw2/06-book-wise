@@ -1,9 +1,9 @@
+import { QUERY_KEYS } from '@/constants/queryKeys'
+import { BookDTO } from '@/dtos/BookDTO'
+import { getPopularBooks } from '@/utils/https'
 import { useQuery } from '@tanstack/react-query'
 import { BookCard } from './BookCard'
-import { getPopularBooks } from '@/utils/https'
-import { Spinner } from '@phosphor-icons/react'
-import { BookDTO } from '@/dtos/BookDTO'
-import { QUERY_KEYS } from '@/constants/queryKeys'
+import { SkeletonCard } from './SkeletonCard'
 
 export function PopularList() {
   const { data, isError, isPending } = useQuery<
@@ -17,10 +17,14 @@ export function PopularList() {
 
   if (isPending) {
     content = (
-      <p className="flex items-center gap-1">
-        <Spinner className="h-5 w-5 animate-spin" />
-        Loading...
-      </p>
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <SkeletonCard
+            key={index}
+            size="xs"
+          />
+        ))}
+      </>
     )
   }
 

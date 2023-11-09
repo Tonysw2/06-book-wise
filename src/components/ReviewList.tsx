@@ -1,10 +1,10 @@
+import { ReviewCard } from '@/components/ReviewCard'
+import { QUERY_KEYS } from '@/constants/queryKeys'
+import { RatingDTO } from '@/dtos/RatingDTO'
 import { getLatestsReviews } from '@/utils/https'
 import { useQuery } from '@tanstack/react-query'
 import { ComponentProps } from 'react'
-import { ReviewCard } from '@/components/ReviewCard'
-import { RatingDTO } from '@/dtos/RatingDTO'
-import { Spinner } from '@phosphor-icons/react'
-import { QUERY_KEYS } from '@/constants/queryKeys'
+import { SkeletonCard } from './SkeletonCard'
 
 type Props = ComponentProps<'ul'>
 
@@ -18,9 +18,14 @@ export function ReviewList(props: Props) {
 
   if (isPending) {
     content = (
-      <p className="flex items-center gap-2 text-sm">
-        {<Spinner className="h-5 w-5 animate-spin" />} Loading...
-      </p>
+      <>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <SkeletonCard
+            key={index}
+            size="sm"
+          />
+        ))}
+      </>
     )
   }
 

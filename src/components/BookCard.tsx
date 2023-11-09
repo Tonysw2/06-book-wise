@@ -22,6 +22,7 @@ export function BookCard({
         src={data.cover_url}
         height={type === 'popular' ? 94 : 152}
         width={type === 'popular' ? 64 : 108}
+        quality={1}
         alt="Book image"
       />
 

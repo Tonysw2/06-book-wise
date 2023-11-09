@@ -4,11 +4,12 @@ import { CategoryList } from '@/components/CategoryList'
 import { Form } from '@/components/Form/SearchInput'
 import { PageTitle } from '@/components/PageTitle'
 import { Sidebar } from '@/components/Sidebar'
+import { SkeletonCard } from '@/components/SkeletonCard'
 import { QUERY_KEYS } from '@/constants/queryKeys'
 import { BookDTO } from '@/dtos/BookDTO'
 import { CategoryDTO } from '@/dtos/CategoryDTO'
 import { getBooksByCategory } from '@/utils/https'
-import { MagnifyingGlass, Spinner } from '@phosphor-icons/react'
+import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
@@ -49,9 +50,14 @@ export default function Explore() {
 
   if (isPending) {
     content = (
-      <p className="flex items-center gap-1">
-        <Spinner className="animate-spin" /> Loading...
-      </p>
+      <>
+        {Array.from({ length: 9 }).map((_, index) => (
+          <SkeletonCard
+            key={index}
+            size="md"
+          />
+        ))}
+      </>
     )
   }
 
@@ -77,7 +83,7 @@ export default function Explore() {
       )
     } else {
       content = (
-        <ul className="grid grid-cols-3 gap-5">
+        <>
           {filteredBooks.map((book) => {
             const alreadyRead = book.ratings.find(
               (rating) => rating.user.email === session.data?.user.email,
@@ -94,7 +100,7 @@ export default function Explore() {
               </li>
             )
           })}
-        </ul>
+        </>
       )
     }
   }
@@ -133,7 +139,9 @@ export default function Explore() {
             handleActiveCategory={handleActiveCategory}
           />
 
-          <div className="overflow-y-auto pb-5 pt-5">{content}</div>
+          <div className="overflow-y-auto pb-5 pt-5">
+            <ul className="grid grid-cols-3 gap-5">{content}</ul>
+          </div>
         </div>
       </main>
     </>
