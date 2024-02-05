@@ -48,10 +48,10 @@ export default async function handler(
     const reviewedBooks = userRatings.length
     const readAuthors = new Set(userRatings.map((rating) => rating.book.author))
       .size
-    const pagesRead = userRatings.reduce(
-      (acc, rating) => acc + rating.book.total_pages,
-      0,
-    )
+    const pagesRead =
+      userRatings.length > 0
+        ? userRatings.reduce((acc, rating) => acc + rating.book.total_pages, 0)
+        : 0
 
     const countCategories: any = {}
 
@@ -65,9 +65,14 @@ export default async function handler(
       })
     })
 
-    const mostReadCategory = Object.keys(countCategories).reduce((a, b) =>
-      countCategories[a] > countCategories[b] ? a : b,
-    )
+    const countCategoriesKeys = Object.keys(countCategories)
+
+    const mostReadCategory =
+      countCategoriesKeys.length > 0
+        ? countCategoriesKeys.reduce((a, b) =>
+            countCategories[a] > countCategories[b] ? a : b,
+          )
+        : 'Nenhuma'
 
     return res.status(200).json({
       userRatings,
