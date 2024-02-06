@@ -25,9 +25,14 @@ export function RateInput({ bookId, handleToggleRateInputVisibility }: Props) {
     onSuccess: async () => {
       handleToggleRateInputVisibility()
 
-      await queryClient.refetchQueries({
-        queryKey: [QUERY_KEYS.REVIEWS],
+      queryClient.refetchQueries({
         type: 'active',
+        queryKey: [QUERY_KEYS.BOOKS],
+      })
+
+      queryClient.refetchQueries({
+        type: 'active',
+        queryKey: [QUERY_KEYS.REVIEWS],
       })
     },
     onError: (error: AxiosError<{ message: string }>) =>
