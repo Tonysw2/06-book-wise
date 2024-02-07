@@ -38,27 +38,13 @@ To run the BookWise on your machine, follow these quick steps:
 
 Before running the project, you need to set up the required environment variables. Create a `.env` file in the root directory of your project and fill it with the necessary values:
 
-```plaintext
-DATABASE_URL=""
-NEXTAUTH_URL=""
-NEXTAUTH_SECRET=""
-GOOGLE_CLIENT_ID=""
-GOOGLE_CLIENT_SECRET=""
-GITHUB_CLIENT_ID=""
-GITHUB_CLIENT_SECRET=""
-```
-
-Replace the placeholders with your actual data:
-
-- `DATABASE_URL`: The connection string to your database.
+- `DATABASE_URL`: The connection string to your database (e.g., `file:./dev.db`).
 - `NEXTAUTH_URL`: The full URL of your site (e.g., `https://example.com` or `http://localhost:3000` for development).
 - `NEXTAUTH_SECRET`: A secret used to encrypt your session cookies and tokens.
 - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET`: Credentials for Google OAuth integration.
 - `GITHUB_CLIENT_ID` & `GITHUB_CLIENT_SECRET`: Credentials for GitHub OAuth integration.
 
 Check the [NextAuth documentation](https://next-auth.js.org/) and follow the steps to add Google and Github authentication.
-
-Ensure you never commit your `.env` file to version control to protect your secrets.
 
 3. **Database Setup**
 
