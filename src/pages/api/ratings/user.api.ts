@@ -43,6 +43,10 @@ export default async function handler(
           },
         },
       },
+
+      orderBy: {
+        created_at: 'desc',
+      },
     })
 
     const reviewedBooks = userRatings.length

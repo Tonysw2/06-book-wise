@@ -20,11 +20,19 @@ export function RateInput({ bookId, handleToggleRateInputVisibility }: Props) {
   const [description, setDescription] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<string>()
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: createBookReview,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.REVIEWS, QUERY_KEYS.USER_REVIEWS],
+    onSuccess: async () => {
+      handleToggleRateInputVisibility()
+
+      queryClient.refetchQueries({
+        type: 'active',
+        queryKey: [QUERY_KEYS.BOOKS],
+      })
+
+      queryClient.refetchQueries({
+        type: 'active',
+        queryKey: [QUERY_KEYS.REVIEWS],
       })
     },
     onError: (error: AxiosError<{ message: string }>) =>
@@ -89,12 +97,15 @@ export function RateInput({ bookId, handleToggleRateInputVisibility }: Props) {
             icon={X}
             type="button"
             variant="close"
+            disabled={isPending}
             onClick={handleToggleRateInputVisibility}
           />
           <ButtonIcon
             icon={Check}
             type="submit"
             variant="submit"
+            disabled={isPending}
+            isLoading={isPending}
           />
         </div>
       </div>
