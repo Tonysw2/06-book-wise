@@ -5,12 +5,9 @@ import { Form } from '@/components/Form/SearchInput'
 import { PageTitle } from '@/components/PageTitle'
 import { Sidebar } from '@/components/Sidebar'
 import { SkeletonCard } from '@/components/SkeletonCard'
-import { QUERY_KEYS } from '@/constants/queryKeys'
-import { BookDTO } from '@/dtos/BookDTO'
 import { CategoryDTO } from '@/dtos/CategoryDTO'
-import { getBooksByCategory } from '@/utils/https'
+import { useBooksByCategory } from '@/hooks/useBooksByCategory'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -27,14 +24,8 @@ export default function Explore() {
 
   const router = useRouter()
 
-  const {
-    data: books,
-    isPending,
-    isError,
-  } = useQuery<BookDTO[]>({
-    queryKey: [QUERY_KEYS.BOOKS, activeCategory],
-    queryFn: ({ signal }) =>
-      getBooksByCategory({ signal, category: activeCategory }),
+  const { books, hasError, isLoading } = useBooksByCategory({
+    categoryId: activeCategory.id,
   })
 
   function handleActiveCategory(category: CategoryDTO) {
@@ -48,7 +39,7 @@ export default function Explore() {
 
   let content
 
-  if (isPending) {
+  if (isLoading) {
     content = (
       <>
         {Array.from({ length: 9 }).map((_, index) => (
@@ -61,7 +52,7 @@ export default function Explore() {
     )
   }
 
-  if (isError) {
+  if (hasError) {
     content = (
       <p className="text-sm text-red-500">
         Não foi possível obter os livros, tente mais tarde.

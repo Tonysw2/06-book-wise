@@ -1,21 +1,13 @@
-import { QUERY_KEYS } from '@/constants/queryKeys'
-import { BookDTO } from '@/dtos/BookDTO'
-import { getPopularBooks } from '@/utils/https'
-import { useQuery } from '@tanstack/react-query'
+import { useMostPopularBooks } from '@/hooks/useMostPopularBooks'
 import { BookCard } from './BookCard'
 import { SkeletonCard } from './SkeletonCard'
 
 export function PopularList() {
-  const { data, isError, isPending } = useQuery<
-    (BookDTO & { avgRating: number })[]
-  >({
-    queryKey: [QUERY_KEYS.BOOKS, QUERY_KEYS.POPULAR],
-    queryFn: ({ signal }) => getPopularBooks({ signal }),
-  })
+  const { popularBooks, hasError, isLoading } = useMostPopularBooks()
 
   let content
 
-  if (isPending) {
+  if (isLoading) {
     content = (
       <>
         {Array.from({ length: 4 }).map((_, index) => (
@@ -28,7 +20,7 @@ export function PopularList() {
     )
   }
 
-  if (isError) {
+  if (hasError) {
     content = (
       <p className="text-sm text-red-500">
         Não foi possível obter os livros mais populares. Tente mais tarde.
@@ -36,10 +28,10 @@ export function PopularList() {
     )
   }
 
-  if (data) {
+  if (popularBooks) {
     content = (
       <ul className="flex flex-col gap-4">
-        {data.map((book) => (
+        {popularBooks.map((book) => (
           <li key={book.id}>
             <BookCard
               data={book}
