@@ -1,3 +1,9 @@
+import { CaretRight } from '@phosphor-icons/react'
+import { useQuery } from '@tanstack/react-query'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+
 import { LastReadCard } from '@/components/LastReadCard'
 import { LinkUI } from '@/components/LinkUI'
 import { PageTitle } from '@/components/PageTitle'
@@ -8,11 +14,6 @@ import { SkeletonCard } from '@/components/SkeletonCard'
 import { QUERY_KEYS } from '@/constants/queryKeys'
 import { UserDTO } from '@/dtos/UserDTO'
 import { getLastRead } from '@/utils/https'
-import { CaretRight } from '@phosphor-icons/react'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 export default function Introduction() {
   const route = useRouter()

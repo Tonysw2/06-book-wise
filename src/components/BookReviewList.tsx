@@ -1,11 +1,12 @@
-import { QUERY_KEYS } from '@/constants/queryKeys'
-import { getBookReviews } from '@/utils/https'
-import { useQuery } from '@tanstack/react-query'
-import { CommentCard } from './CommentCard'
-import { RatingDTO } from '@/dtos/RatingDTO'
 import { Spinner } from '@phosphor-icons/react'
+import { useQuery } from '@tanstack/react-query'
+
+import { QUERY_KEYS } from '@/constants/queryKeys'
+import { RatingDTO } from '@/dtos/RatingDTO'
+import { getBookReviews } from '@/utils/https'
+
+import { CommentCard } from './CommentCard'
 import { RateInput } from './Form/RateInput'
-import { clear } from 'console'
 
 type Props = {
   bookId: string

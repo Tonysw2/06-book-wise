@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { Rating } from './Rating'
-import { RatingDTO } from '@/dtos/RatingDTO'
+
 import { BookDTO } from '@/dtos/BookDTO'
+import { RatingDTO } from '@/dtos/RatingDTO'
+
+import { Rating } from './Rating'
 
 interface BookCardReadProps {
   data: RatingDTO & { book: BookDTO }

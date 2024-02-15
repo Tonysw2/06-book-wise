@@ -1,4 +1,5 @@
 import { Adapter } from 'next-auth/adapters'
+
 import { prisma } from '../prisma'
 
 export function PrismaAdapter(): Adapter {

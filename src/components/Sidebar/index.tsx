@@ -5,10 +5,11 @@ import {
   SignOut,
   User,
 } from '@phosphor-icons/react'
-import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
+
 import Logo from '../../../public/logo.svg'
 import { AvatarUI } from '../Avatar'
 import { SidebarLink } from './SidebarLink'

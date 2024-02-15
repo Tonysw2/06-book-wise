@@ -1,7 +1,7 @@
 import { IconProps } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { ComponentProps, ElementType } from 'react'
-import { VariantProps, tv } from 'tailwind-variants'
+import { tv, VariantProps } from 'tailwind-variants'
 
 const link = tv({
   base: 'z-[999] flex items-center rounded px-2 py-1 font-bold transition-all',

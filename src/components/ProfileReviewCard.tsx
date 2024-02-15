@@ -1,5 +1,7 @@
-import { RatingDTO } from '@/dtos/RatingDTO'
 import Image from 'next/image'
+
+import { RatingDTO } from '@/dtos/RatingDTO'
+
 import { Rating } from './Rating'
 
 type Props = {

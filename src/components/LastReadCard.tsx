@@ -1,7 +1,8 @@
-import { ComponentProps } from 'react'
 import Image from 'next/image'
+
 import { UserDTO } from '@/dtos/UserDTO'
 import { formatDate } from '@/utils/formatDate'
+
 import { Rating } from './Rating'
 
 type Props = {

@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { ReactNode } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
+
 import { SignInButton } from './SignInButton'
 
 type Props = {

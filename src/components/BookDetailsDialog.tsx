@@ -1,9 +1,11 @@
-import { BookDTO } from '@/dtos/BookDTO'
 import { X } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useSession } from 'next-auth/react'
 import { ComponentProps, ReactNode, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+
+import { BookDTO } from '@/dtos/BookDTO'
+
 import { BookDetail } from './BookDetail'
 import { BookReviewList } from './BookReviewList'
 import { LinkUI } from './LinkUI'

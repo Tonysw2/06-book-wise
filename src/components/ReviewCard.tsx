@@ -1,8 +1,9 @@
+import Image from 'next/image'
+
 import { AvatarUI } from '@/components/Avatar'
 import { Rating } from '@/components/Rating'
 import { RatingDTO } from '@/dtos/RatingDTO'
 import { formatDate } from '@/utils/formatDate'
-import Image from 'next/image'
 
 type Props = {
   data: RatingDTO

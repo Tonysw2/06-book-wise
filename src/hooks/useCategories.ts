@@ -1,9 +1,9 @@
-import CategoryService from '@/services/CategoryService'
-import { getCategories } from '@/utils/https'
 import { useQuery } from '@tanstack/react-query'
 
+import CategoryService from '@/services/CategoryService'
+
 export function useCategories() {
-  const { data, isFetching, isError, error } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: ['categories'],
     queryFn: CategoryService.listAll.bind(CategoryService),
   })

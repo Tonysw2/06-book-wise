@@ -1,14 +1,6 @@
-import { AvatarUI } from '@/components/Avatar'
-import { Form } from '@/components/Form/SearchInput'
-import { PageTitle } from '@/components/PageTitle'
-import { ProfileReviewCard } from '@/components/ProfileReviewCard'
-import { ProfileStats } from '@/components/ProfileStats'
-import { Sidebar } from '@/components/Sidebar'
-import { useUserRatings } from '@/hooks/useUserRatings'
-import { formatDate } from '@/utils/formatDate'
 import {
-  BookOpen,
   BookmarkSimple,
+  BookOpen,
   Books,
   MagnifyingGlass,
   Spinner,
@@ -17,6 +9,15 @@ import {
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
+
+import { AvatarUI } from '@/components/Avatar'
+import { Form } from '@/components/Form/SearchInput'
+import { PageTitle } from '@/components/PageTitle'
+import { ProfileReviewCard } from '@/components/ProfileReviewCard'
+import { ProfileStats } from '@/components/ProfileStats'
+import { Sidebar } from '@/components/Sidebar'
+import { useUserRatings } from '@/hooks/useUserRatings'
+import { formatDate } from '@/utils/formatDate'
 
 export default function Profile() {
   const route = useRouter()

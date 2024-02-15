@@ -1,6 +1,8 @@
+import { Spinner } from '@phosphor-icons/react'
+
 import { CategoryDTO } from '@/dtos/CategoryDTO'
 import { useCategories } from '@/hooks/useCategories'
-import { Spinner } from '@phosphor-icons/react'
+
 import { CategoryCard } from './CategoryCard'
 
 type Props = {

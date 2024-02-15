@@ -1,5 +1,6 @@
 import { ReviewCard } from '@/components/ReviewCard'
 import { useRatings } from '@/hooks/useRatings'
+
 import { SkeletonCard } from './SkeletonCard'
 
 export function ReviewList() {

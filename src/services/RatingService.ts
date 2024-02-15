@@ -1,4 +1,5 @@
 import { RatingDTO } from '@/dtos/RatingDTO'
+
 import { HttpClient } from './utils/httpClient'
 
 type UserRatingType = {

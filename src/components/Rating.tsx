@@ -1,6 +1,6 @@
-import { Icon, Star } from '@phosphor-icons/react'
+import { Star } from '@phosphor-icons/react'
 import { useState } from 'react'
-import { VariantProps, tv } from 'tailwind-variants'
+import { tv, VariantProps } from 'tailwind-variants'
 
 const star = tv({
   base: 'text-purple-100',

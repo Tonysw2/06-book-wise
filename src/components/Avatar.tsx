@@ -1,6 +1,6 @@
 import { User } from '@phosphor-icons/react'
 import * as Avatar from '@radix-ui/react-avatar'
-import { VariantProps, tv } from 'tailwind-variants'
+import { tv, VariantProps } from 'tailwind-variants'
 
 const avatar = tv({
   base: 'flex select-none items-center justify-center overflow-hidden rounded-full bg-gradient-vertical',

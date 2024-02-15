@@ -1,5 +1,6 @@
-import RatingService from '@/services/RatingService'
 import { useQuery } from '@tanstack/react-query'
+
+import RatingService from '@/services/RatingService'
 
 type UseUserRatingParams = {
   userId: string

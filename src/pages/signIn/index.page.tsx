@@ -1,9 +1,11 @@
-import { SignInButton } from '@/components/SignInButton'
 import Head from 'next/head'
 import Image from 'next/image'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { IoRocketOutline } from 'react-icons/io5'
+
+import { SignInButton } from '@/components/SignInButton'
+
 import HomeBg from '../../../public/bg-home.png'
 
 export default function SignIn() {

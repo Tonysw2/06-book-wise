@@ -1,5 +1,7 @@
-import { BookDTO } from '@/dtos/BookDTO'
 import Image from 'next/image'
+
+import { BookDTO } from '@/dtos/BookDTO'
+
 import { Rating } from './Rating'
 import { Tag } from './Tag'
 

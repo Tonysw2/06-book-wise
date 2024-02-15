@@ -1,5 +1,6 @@
-import RatingService from '@/services/RatingService'
 import { useQuery } from '@tanstack/react-query'
+
+import RatingService from '@/services/RatingService'
 
 export function useRatings() {
   const { data, isError, isFetching } = useQuery({

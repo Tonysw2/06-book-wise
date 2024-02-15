@@ -1,4 +1,5 @@
 import { CategoryDTO } from '@/dtos/CategoryDTO'
+
 import { HttpClient } from './utils/httpClient'
 
 class CategoryService {

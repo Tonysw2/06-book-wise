@@ -1,9 +1,10 @@
-import { ComponentProps } from 'react'
-import { AvatarUI } from './Avatar'
-import { Rating } from './Rating'
 import { twMerge } from 'tailwind-merge'
+
 import { RatingDTO } from '@/dtos/RatingDTO'
 import { formatDate } from '@/utils/formatDate'
+
+import { AvatarUI } from './Avatar'
+import { Rating } from './Rating'
 
 type Props = {
   review: Omit<RatingDTO, 'books'>

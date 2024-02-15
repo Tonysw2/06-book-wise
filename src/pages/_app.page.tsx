@@ -1,9 +1,11 @@
 import '@/styles/globals.css'
-import { queryClient } from '@/utils/https'
+
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
+import { SessionProvider } from 'next-auth/react'
+
+import { queryClient } from '@/utils/https'
 
 export default function App({
   Component,

@@ -1,17 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { prisma } from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
+import { z, ZodError } from 'zod'
+
+import { prisma } from '@/lib/prisma'
+
 import { buildNextAuthOptions } from '../../auth/[...nextauth].api'
-import { ZodError, z } from 'zod'
-import { AxiosError } from 'axios'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   if (req.method !== 'POST') {
-    return res.status(404).json({ error: 'Mehthod not allowed' })
+    return res.status(404).json({ error: 'Method not allowed' })
   }
 
   const session = await getServerSession(

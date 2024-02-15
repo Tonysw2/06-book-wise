@@ -1,8 +1,8 @@
+import { BookmarkSimple, BookOpen } from '@phosphor-icons/react'
+import Image from 'next/image'
+
 import { Rating } from '@/components/Rating'
 import { BookDTO } from '@/dtos/BookDTO'
-import { BookOpen, BookmarkSimple } from '@phosphor-icons/react'
-import Image from 'next/image'
-import { ComponentProps } from 'react'
 
 type Props = {
   book: BookDTO

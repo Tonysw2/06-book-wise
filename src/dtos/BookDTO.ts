@@ -1,5 +1,4 @@
 import { CategoriesDTO } from './CategoriesDTO'
-import { CategoryDTO } from './CategoryDTO'
 import { RatingDTO } from './RatingDTO'
 
 export type BookDTO = {

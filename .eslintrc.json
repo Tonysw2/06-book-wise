@@ -1,4 +1,5 @@
 {
+  "extends": ["next/core-web-vitals", "@rocketseat/eslint-config/next"],
   "rules": {
     "prettier/prettier": ["error", {
       "printWidth": 80,
@@ -9,7 +10,12 @@
       "semi": false,
       "endOfLine": "auto",
       "singleAttributePerLine": true
-    }]
+    }],
+    "simple-import-sort/imports": "error"
   },
-  "extends": ["next/core-web-vitals", "@rocketseat/eslint-config/next"]
+  "plugins": ["simple-import-sort"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  }
 }

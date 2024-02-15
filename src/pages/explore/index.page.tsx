@@ -1,3 +1,9 @@
+import { MagnifyingGlass } from '@phosphor-icons/react'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import { ChangeEvent, useState } from 'react'
+
 import { BookCard } from '@/components/BookCard'
 import { BookDetailsDialog } from '@/components/BookDetailsDialog'
 import { CategoryList } from '@/components/CategoryList'
@@ -7,11 +13,6 @@ import { Sidebar } from '@/components/Sidebar'
 import { SkeletonCard } from '@/components/SkeletonCard'
 import { CategoryDTO } from '@/dtos/CategoryDTO'
 import { useBooksByCategory } from '@/hooks/useBooksByCategory'
-import { MagnifyingGlass } from '@phosphor-icons/react'
-import { useSession } from 'next-auth/react'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { ChangeEvent, useState } from 'react'
 
 export default function Explore() {
   const session = useSession()
