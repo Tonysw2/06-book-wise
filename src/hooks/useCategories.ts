@@ -8,8 +8,6 @@ export function useCategories() {
     queryFn: CategoryService.listAll.bind(CategoryService),
   })
 
-  console.log(error)
-
   return {
     categories: data,
     hasError: isError,
