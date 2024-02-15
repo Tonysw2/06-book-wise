@@ -33,15 +33,17 @@ export function Sidebar() {
               text="Introdução"
               pathname={router.pathname}
             />
+
             <SidebarLink
               href="/explore"
               icon={Binoculars}
               text="Explorar"
               pathname={router.pathname}
             />
+
             {session.status === 'authenticated' ? (
               <SidebarLink
-                href="/profile"
+                href={`/profile/${session.data.user.id}`}
                 icon={User}
                 text="Perfil"
                 pathname={router.pathname}

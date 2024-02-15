@@ -2,33 +2,22 @@
 import { prisma } from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
-import { buildNextAuthOptions } from '../auth/[...nextauth].api'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   if (req.method !== 'GET') {
-    return res.status(404).json({ error: 'Mehthod not allowed' })
+    return res.status(404).json({ error: 'Method not allowed' })
   }
 
-  const session = await getServerSession(
-    req,
-    res,
-    buildNextAuthOptions(req, res),
-  )
-
-  if (!session) {
-    return res
-      .status(404)
-      .json({ message: 'Você precisa estar logado primeiro.' })
-  }
+  const { userId } = req.query as { userId: string }
 
   try {
     const userRatings = await prisma.rating.findMany({
       where: {
         user: {
-          email: session.user.email,
+          id: userId,
         },
       },
 

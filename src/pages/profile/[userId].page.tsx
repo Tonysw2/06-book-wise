@@ -4,10 +4,8 @@ import { PageTitle } from '@/components/PageTitle'
 import { ProfileReviewCard } from '@/components/ProfileReviewCard'
 import { ProfileStats } from '@/components/ProfileStats'
 import { Sidebar } from '@/components/Sidebar'
-import { QUERY_KEYS } from '@/constants/queryKeys'
-import { RatingDTO } from '@/dtos/RatingDTO'
+import { useUserRatings } from '@/hooks/useUserRatings'
 import { formatDate } from '@/utils/formatDate'
-import { getUserRatings } from '@/utils/https'
 import {
   BookOpen,
   BookmarkSimple,
@@ -16,31 +14,18 @@ import {
   Spinner,
   UserList,
 } from '@phosphor-icons/react'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 
-type UserRatingType = {
-  userRatings: RatingDTO[]
-  reviewedBooks: number
-  readAuthors: number
-  pagesRead: number
-  mostReadCategory: string
-}
-
 export default function Profile() {
   const route = useRouter()
-  const session = useSession()
 
   const [query, setQuery] = useState('')
 
-  const { data, isPending, isError } = useQuery<UserRatingType>({
-    queryKey: [QUERY_KEYS.USER_REVIEWS],
-    queryFn: ({ signal }) => getUserRatings({ signal }),
-    enabled: !!session.data,
-  })
+  const { userId } = route.query as { userId: string }
+
+  const { userReviews, hasError, isLoading } = useUserRatings({ userId })
 
   function handleQuery(event: ChangeEvent<HTMLInputElement>) {
     setQuery(event.target.value)
@@ -48,7 +33,7 @@ export default function Profile() {
 
   let content
 
-  if (isError) {
+  if (hasError) {
     content = (
       <p className="text-sm text-red-500">
         Não foi possível obter suas avaliações, tente mais tarde.
@@ -56,12 +41,12 @@ export default function Profile() {
     )
   }
 
-  if (isPending) {
+  if (isLoading) {
     content = <Spinner className="h-5 w-5 animate-spin" />
   }
 
-  if (data) {
-    if (data.userRatings.length === 0) {
+  if (userReviews) {
+    if (userReviews.userRatings.length === 0) {
       content = (
         <p className="text-sm text-gray-300">
           Você ainda não possui nenhum livro avaliado.
@@ -69,7 +54,7 @@ export default function Profile() {
       )
     }
 
-    const filteredReviews = data.userRatings.filter(
+    const filteredReviews = userReviews.userRatings.filter(
       (review) =>
         review.book.name.toLowerCase().includes(query) ||
         review.book.author.toLowerCase().includes(query),
@@ -154,22 +139,22 @@ export default function Profile() {
               <div className="flex flex-col gap-10 px-14 py-5">
                 <ProfileStats
                   icon={BookOpen}
-                  title={String(data?.pagesRead)}
+                  title={String(userReviews?.pagesRead)}
                   description="Páginas lidas"
                 />
                 <ProfileStats
                   icon={Books}
-                  title={String(data?.reviewedBooks)}
+                  title={String(userReviews?.reviewedBooks)}
                   description="Livros avaliados"
                 />
                 <ProfileStats
                   icon={UserList}
-                  title={String(data?.readAuthors)}
+                  title={String(userReviews?.readAuthors)}
                   description="Autores lidos"
                 />
                 <ProfileStats
                   icon={BookmarkSimple}
-                  title={String(data?.mostReadCategory)}
+                  title={String(userReviews?.mostReadCategory)}
                   description="Categoria mais lida"
                 />
               </div>
