@@ -6,6 +6,7 @@ import {
   Spinner,
   UserList,
 } from '@phosphor-icons/react'
+import { getYear } from 'date-fns'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
@@ -16,6 +17,7 @@ import { PageTitle } from '@/components/PageTitle'
 import { ProfileReviewCard } from '@/components/ProfileReviewCard'
 import { ProfileStats } from '@/components/ProfileStats'
 import { Sidebar } from '@/components/Sidebar'
+import { useUser } from '@/hooks/useUser'
 import { useUserRatings } from '@/hooks/useUserRatings'
 import { formatDate } from '@/utils/formatDate'
 
@@ -26,6 +28,7 @@ export default function Profile() {
 
   const { userId } = route.query as { userId: string }
 
+  const { user } = useUser({ userId })
   const { userReviews, hasError, isLoading } = useUserRatings({ userId })
 
   function handleQuery(event: ChangeEvent<HTMLInputElement>) {
@@ -122,16 +125,18 @@ export default function Profile() {
               <div className="flex flex-col items-center gap-5">
                 <AvatarUI
                   className="h-18 w-18"
-                  url="https://github.com/tonysw2.png"
+                  url={user?.avatar_url}
                 />
 
                 <div className="flex flex-col items-center">
                   <p className="text-center text-xl font-bold leading-short">
-                    Anthony Ribeiro
+                    {user?.name}
                   </p>
-                  <p className="text-center text-sm text-gray-400">
-                    membro desde 2023
-                  </p>
+                  {user && (
+                    <p className="text-center text-sm text-gray-400">
+                      membro desde {getYear(new Date(user.created_at))}
+                    </p>
+                  )}
                 </div>
               </div>
 

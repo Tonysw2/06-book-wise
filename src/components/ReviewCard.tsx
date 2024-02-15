@@ -1,18 +1,32 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 import { AvatarUI } from '@/components/Avatar'
 import { Rating } from '@/components/Rating'
 import { RatingDTO } from '@/dtos/RatingDTO'
 import { formatDate } from '@/utils/formatDate'
 
+import { SignInDialog } from './SignInDialog'
+
 type Props = {
   data: RatingDTO
 }
 export function ReviewCard({ data }: Props) {
+  const session = useSession()
+
   return (
     <article className="flex-shrink-1 flex flex-col gap-8 rounded-lg bg-gray-700 p-6">
       <header className="flex items-start gap-4">
-        <AvatarUI url={data.user.avatar_url} />
+        {session.status === 'authenticated' ? (
+          <Link href={`/profile/${data.user_id}`}>
+            <AvatarUI url={data.user.avatar_url} />
+          </Link>
+        ) : (
+          <SignInDialog>
+            <AvatarUI url={data.user.avatar_url} />
+          </SignInDialog>
+        )}
 
         <div className="grow">
           <p>{data.user.name}</p>
