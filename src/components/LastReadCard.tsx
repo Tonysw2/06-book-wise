@@ -1,19 +1,19 @@
 import Image from 'next/image'
 
-import { UserDTO } from '@/dtos/UserDTO'
 import { formatDate } from '@/utils/formatDate'
 
+import { RatingDTO } from '@/dtos/RatingDTO'
 import { Rating } from './Rating'
 
 type Props = {
-  data: UserDTO
+  data: RatingDTO
 }
 
 export function LastReadCard({ data }: Props) {
   return (
     <article className="flex gap-6 rounded-lg bg-gray-600 px-6 py-5">
       <Image
-        src={data.ratings[0].book.cover_url}
+        src={data.book.cover_url}
         height={152}
         width={108}
         alt="Book image"
@@ -23,22 +23,22 @@ export function LastReadCard({ data }: Props) {
         <header className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <time className="text-sm text-gray-300">
-              {formatDate(data.ratings[0].created_at)}
+              {formatDate(data.created_at)}
             </time>
-            <Rating rate={data.ratings[0].rate} />
+            <Rating rate={data.rate} />
           </div>
 
           <div className="flex flex-col gap-1">
             <span className="font-bold leading-short">
-              {data.ratings[0].book.name}
+              {data.book.name}
             </span>
             <span className="text-sm text-gray-400">
-              {data.ratings[0].book.author}
+              {data.book.author}
             </span>
           </div>
         </header>
 
-        <p className="text-sm text-gray-300">{data.ratings[0].description}</p>
+        <p className="text-sm text-gray-300">{data.description}</p>
       </div>
     </article>
   )

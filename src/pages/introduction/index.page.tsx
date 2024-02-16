@@ -14,23 +14,17 @@ import { SkeletonCard } from '@/components/SkeletonCard'
 import { QUERY_KEYS } from '@/constants/queryKeys'
 import { UserDTO } from '@/dtos/UserDTO'
 import { getLastRead } from '@/utils/https'
+import { useUserRatings } from '@/hooks/useUserRatings'
 
 export default function Introduction() {
   const route = useRouter()
   const session = useSession()
 
-  const {
-    data: lastRead,
-    isPending,
-    isError,
-  } = useQuery<UserDTO>({
-    queryKey: [QUERY_KEYS.LAST_READ, session.data?.user.email],
-    queryFn: ({ signal }) => getLastRead({ signal }),
-  })
+ const {userReviews, hasError, isLoading} = useUserRatings({userId: session.data?.user.id.toString() ?? ''})
 
   let content
 
-  if (isError) {
+  if (hasError) {
     content = (
       <p className="text-sm text-red-500">
         Não foi possível obter sua última leitura, tente mais tarde.
@@ -38,19 +32,19 @@ export default function Introduction() {
     )
   }
 
-  if (isPending) {
+  if (isLoading) {
     content = <SkeletonCard size="sm" />
   }
 
-  if (lastRead) {
-    if (lastRead.ratings.length === 0) {
+  if (userReviews) {
+    if (userReviews.userRatings.length === 0) {
       content = (
         <p className="text-sm">
           Você ainda não tem leituras concluídas para exibir.
         </p>
       )
     } else {
-      content = <LastReadCard data={lastRead} />
+      content = <LastReadCard data={userReviews.userRatings[0]} />
     }
   }
 

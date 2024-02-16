@@ -9,7 +9,7 @@ type UseUserRatingParams = {
 export function useUserRatings({ userId }: UseUserRatingParams) {
   const { data, isFetching, isError } = useQuery({
     queryKey: ['ratings', { userId }],
-    queryFn: () => RatingService.user(userId),
+    queryFn: () => RatingService.listAllByUserId(userId),
   })
 
   return {

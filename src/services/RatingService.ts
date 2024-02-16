@@ -22,7 +22,7 @@ class RatingService {
     return response.data
   }
 
-  public async user(userId: string) {
+  public async listAllByUserId(userId: string) {
     const response = await this.api.get<UserRatingType>(`/user/${userId}`)
     return response.data
   }
